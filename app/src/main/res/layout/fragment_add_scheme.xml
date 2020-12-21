@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AddSchemeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="20sp"
+            android:fontFamily="@font/roboto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/scheme_setup"
+            android:id="@+id/label"
+            />
+
+        <ScrollView
+            android:layout_marginTop="5dp"
+            app:layout_constraintHeight_default="spread"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#ffffff"
+                app:layout_constraintTop_toBottomOf="@+id/registerAppBar"
+                app:layout_constraintHeight_default="spread"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:padding="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select scheme to register with:"
+                        android:id="@+id/schemeLabel"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+                    <Spinner
+                        android:layout_marginTop="5dp"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/schemesSpinner"
+                        android:entries="@array/schemes"
+                        app:layout_constraintTop_toBottomOf="@+id/schemeLabel"
+                        />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:layout_constraintTop_toBottomOf="@+id/schemesSpinner"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/schemesSpinner"
+                        android:hint="@string/appr"
+                        app:errorEnabled="true"
+                        android:id="@+id/percentageOnPay_TIL" >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:gravity="end"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/percentageOnPay_ET"
+                            android:inputType="numberDecimal" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:layout_constraintTop_toBottomOf="@+id/percentageOnPay_TIL"
+                        android:hint="Maximum monthly contribution(GHS)"
+                        app:errorEnabled="true"
+                        android:id="@+id/maxContribution_TIL" >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:gravity="end"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/maxContribution_ET"
+                            android:inputType="numberDecimal" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            app:icon="@drawable/save"
+            app:iconGravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/saveButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

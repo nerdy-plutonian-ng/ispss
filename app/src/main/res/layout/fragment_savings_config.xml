@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SavingsConfigFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="20sp"
+            android:fontFamily="@font/roboto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/savings_configuration"
+            android:id="@+id/label"
+            />
+
+        <ScrollView
+            android:layout_marginTop="5dp"
+            app:layout_constraintHeight_default="spread"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#ffffff"
+                app:layout_constraintTop_toBottomOf="@+id/registerAppBar"
+                app:layout_constraintHeight_default="spread"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:padding="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:id="@+id/radioTitle_TV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Funds Transfer Medium"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RadioGroup
+                        app:layout_constraintTop_toBottomOf="@+id/radioTitle_TV"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mediumRadioGroup">
+                        <RadioButton
+                            android:checked="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mobile Money"
+                            android:id="@+id/momoRadio" />
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bank Account"
+                            android:id="@+id/bankRadio" />
+                    </RadioGroup>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/momoCL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/mediumRadioGroup">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Choose Mobile Network Provider"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:id="@+id/networkLabel" />
+
+                        <Spinner
+                            android:padding="15dp"
+                            style="@style/Widget.AppCompat.Spinner.Underlined"
+                            app:layout_constraintTop_toBottomOf="@+id/networkLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/providers"
+                            android:id="@+id/providersSpinner" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/momo_TIL"
+                            app:errorEnabled="true"
+                            android:hint="Mobile Money Number"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            app:layout_constraintTop_toBottomOf="@+id/providersSpinner">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:drawableEnd="@drawable/phone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="phone"
+                                android:maxLength="10"
+                                android:id="@+id/momo_Et"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/momo_owner_TIL"
+                            app:errorEnabled="true"
+                            android:hint="Mobile Money Account Name"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            app:layout_constraintTop_toBottomOf="@+id/momo_TIL">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:drawableEnd="@drawable/person"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:id="@+id/momo_owner_Et"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        app:layout_constraintTop_toBottomOf="@+id/mediumRadioGroup"
+                        android:visibility="gone"
+                        android:id="@+id/bankCL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ScrollView
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/bankAccountNumber_TIL"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:errorEnabled="true"
+                                    android:hint="Bank Account Number"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/bankAccountNo_Et"
+                                        android:gravity="end"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"/>
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/bankAccountName_TIL"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:errorEnabled="true"
+                                    android:hint="Bank Account Name"
+                                    app:layout_constraintTop_toBottomOf="@+id/bankAccountNumber_TIL"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/bankAccountName_Et"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="text"/>
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/bankName_TIL"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:errorEnabled="true"
+                                    android:hint="Bank Name"
+                                    app:layout_constraintTop_toBottomOf="@+id/bankAccountName_TIL"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/bankName_Et"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="text"/>
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/bankBranch_TIL"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:errorEnabled="true"
+                                    android:hint="Bank Branch"
+                                    app:layout_constraintTop_toBottomOf="@+id/bankName_TIL"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/bankBranch_Et"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="text"/>
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <TextView
+                                    android:fontFamily="@font/roboto"
+                                    android:id="@+id/accountTypeLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Choose Account Type:"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/bankBranch_TIL" />
+
+                                <Spinner
+                                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                                    app:layout_constraintTop_toBottomOf="@+id/accountTypeLabel"
+                                    android:padding="15dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:entries="@array/bank_account_types"
+                                    android:id="@+id/bankAccountTypeSpinner" />
+
+
+
+                            </LinearLayout>
+
+                        </ScrollView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            app:icon="@drawable/go_right"
+            app:iconGravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/nextButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

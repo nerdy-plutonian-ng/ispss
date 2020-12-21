@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".SchemeActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:elevation="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/schemesAppBar"
+        android:background="@color/colorPrimary"
+        app:title="@string/Schemes"
+        app:titleTextColor="@color/colorWhite"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/schemesAppBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        android:id="@+id/emptySchemeCL"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ImageView
+            android:id="@+id/emptyDrawableIV"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/schemes" />
+
+        <TextView
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/emptyDrawableIV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:text="@string/no_schemes_registered" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toBottomOf="@+id/schemesAppBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:background="#90000000"
+        android:layout_height="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/schemesLabel"
+            android:text="Registered Schemes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/roboto"
+            android:textSize="25sp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/schemesLabel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/schemesRecycler" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        app:icon="@drawable/add"
+        android:text="@string/add_scheme"
+        android:tooltipText="@string/add_scheme"
+        android:layout_margin="10dp"
+        android:src="@drawable/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/addSchemeBtn"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_fund_to_contribute_to"
+            android:id="@+id/fundLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/roboto" />
+
+        <Spinner
+            android:entries="@array/schemes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:id="@+id/schemesSpinner"
+            app:layout_constraintTop_toBottomOf="@+id/fundLabel"
+            />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintTop_toBottomOf="@+id/schemesSpinner"
+            app:errorEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/amount_TIL"
+            android:hint="@string/amount_ghs">
+            <com.google.android.material.textfield.TextInputEditText
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:id="@+id/amount_Et"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pay_via_mobile_money"
+            app:layout_constraintTop_toBottomOf="@+id/amount_TIL"
+            android:id="@+id/momoCheckbox"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/momoCheckbox"
+            app:errorEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/momo_TIL"
+            android:maxLength="10"
+            android:hint="@string/mobile_money_number">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:id="@+id/momo_Et"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/contributeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contribute"
+            app:layout_constraintTop_toBottomOf="@+id/momo_TIL" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

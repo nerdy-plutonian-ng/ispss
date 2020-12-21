@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AdditionalInfoFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="20sp"
+            android:fontFamily="@font/roboto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Additional Info"
+            android:id="@+id/label"
+            />
+
+        <ScrollView
+            android:layout_marginTop="5dp"
+            app:layout_constraintHeight_default="spread"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#ffffff"
+                app:layout_constraintTop_toBottomOf="@+id/registerAppBar"
+                app:layout_constraintHeight_default="spread"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:padding="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:hint="@string/residence"
+                        app:errorEnabled="true"
+                        android:id="@+id/residence_TIL" >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:drawableEnd="@drawable/home"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/residence_ET"
+                            android:inputType="textPostalAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:layout_constraintTop_toBottomOf="@+id/residence_TIL"
+                        android:hint="@string/hometown"
+                        app:errorEnabled="true"
+                        android:id="@+id/hometown_TIL" >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:drawableEnd="@drawable/map"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/hometown_ET"
+                            android:inputType="textPostalAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:layout_constraintTop_toBottomOf="@+id/hometown_TIL"
+                        android:hint="@string/occupation"
+                        app:errorEnabled="true"
+                        android:id="@+id/occupation_TIL" >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:drawableEnd="@drawable/work"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/occupation_ET"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            app:icon="@drawable/go_right"
+            app:iconGravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/nextButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="@+id/titleTV"
+        app:layout_constraintBottom_toBottomOf="@+id/valueTV"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/icon" />
+
+    <TextView
+        android:layout_marginStart="10dp"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/titleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintBottom_toTopOf="@+id/valueTV"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:layout_marginStart="10dp"
+        android:id="@+id/valueTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:textColor="#E5E5E5"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintTop_toBottomOf="@+id/titleTV"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

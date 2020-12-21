@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                app:endIconMode="custom"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/contributorID_TIL"
+                android:hint="@string/member_id">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/contributorID_Et"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="@+id/contributorID_TIL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/contributorNameTV"
+                app:layout_constraintTop_toBottomOf="@+id/contributorID_TIL"/>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="5dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/contributorNameTV"
+                app:errorEnabled="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/amount_TIL"
+                android:hint="@string/amount_ghs">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLength="10"
+                    android:id="@+id/amount_Et"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/amount_TIL"
+                app:errorEnabled="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/description_TIL"
+                android:hint="@string/description">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/description_Et"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pay_via_mobile_money"
+                app:layout_constraintTop_toBottomOf="@+id/description_TIL"
+                android:id="@+id/momoCheckbox"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/momoCheckbox"
+                app:errorEnabled="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/momo_TIL"
+                android:hint="@string/mobile_money_number">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:id="@+id/momo_Et"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/payBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pay"
+                app:layout_constraintTop_toBottomOf="@+id/momo_TIL" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</com.google.android.material.card.MaterialCardView>

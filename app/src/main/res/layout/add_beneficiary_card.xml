@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fnameTIL"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="First Name"
+                app:layout_constraintTop_toTopOf="parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fName_Et"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lnameTIL"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Last Name"
+                app:layout_constraintTop_toBottomOf="@+id/fnameTIL">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lName_Et"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginEnd="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/DOB_TIL"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Date of Birth"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/phone_TIL"
+                app:layout_constraintTop_toBottomOf="@+id/lnameTIL">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/DOB_Et"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginStart="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/phone_TIL"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Phone"
+                app:layout_constraintStart_toEndOf="@+id/DOB_TIL"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lnameTIL">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/phone_Et"
+                    android:maxLength="10"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/relationshipLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/DOB_TIL"
+                android:text="Relationship" />
+
+
+            <Spinner
+                android:layout_marginTop="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/relationshipSpinner"
+                android:entries="@array/relations"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/percentageTIL"
+                app:layout_constraintTop_toBottomOf="@+id/relationshipLabel" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginStart="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/percentageTIL"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Percentage"
+                app:layout_constraintStart_toEndOf="@+id/relationshipSpinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phone_TIL">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/percentageEt"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/genderLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/percentageTIL"
+                android:fontFamily="@font/roboto"
+                android:text="@string/gender" />
+            <RadioGroup
+                android:id="@+id/genderGroup"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genderLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:checked="true"
+                    android:id="@+id/maleRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male" />
+                <RadioButton
+                    android:id="@+id/femaleRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female" />
+            </RadioGroup>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/saveBtn"
+                android:text="@string/save"
+                app:layout_constraintTop_toBottomOf="@+id/genderGroup"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+
+</com.google.android.material.card.MaterialCardView>

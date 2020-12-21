@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="50dp"
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:fontFamily="@font/roboto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Login"
+            android:id="@+id/label"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            app:endIconDrawable="@drawable/go_right"
+            app:endIconMode="custom"
+            android:layout_marginTop="20dp"
+            app:errorEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userID_TIL"
+            android:hint="@string/login_instruction"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintTop_toBottomOf="@+id/label">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:id="@+id/userID_ET"
+                 />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:textSize="20sp"
+            android:clickable="true"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/registerUser_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/userID_TIL"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/register_user"
+            android:focusable="true" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

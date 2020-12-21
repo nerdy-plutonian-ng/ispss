@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".PayActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#90000000">
+
+    <androidx.appcompat.widget.Toolbar
+        android:elevation="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/payMemberAppBar"
+        android:background="@color/colorPrimary"
+        app:title="Pay a Member"
+        app:titleTextColor="@color/colorWhite"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/payMemberAppBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="0dp">
+
+            <com.google.android.material.card.MaterialCardView
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/memberID_TIL"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/favoriteBook_IV"
+                            android:layout_marginEnd="20dp"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            app:errorEnabled="true"
+                            android:hint="@string/member_id" >
+                            <AutoCompleteTextView
+                                android:maxLength="7"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/memberID_ET"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageView
+                            android:onClick="showFavouriteList"
+                            android:tooltipText="Click to select from favourites"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:src="@drawable/fav_list"
+                            android:id="@+id/favoriteBook_IV"
+                            app:layout_constraintTop_toTopOf="@+id/memberID_TIL"
+                            app:layout_constraintBottom_toBottomOf="@id/memberID_TIL" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/memberName_TIL"
+                            app:layout_constraintTop_toBottomOf="@+id/memberID_TIL"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/favoriteBook_IV"
+                            android:layout_marginEnd="20dp"
+                            app:errorEnabled="true"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:hint="@string/member_name" >
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:enabled="false"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/memberName_ET"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageView
+                            android:onClick="makeFavourite"
+                            android:tooltipText="Click to add to favourites"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:src="@drawable/star_grey"
+                            android:id="@+id/favorite_IV"
+                            app:layout_constraintTop_toTopOf="@+id/memberName_TIL"
+                            app:layout_constraintBottom_toBottomOf="@id/memberName_TIL" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/amount_TIL"
+                            app:layout_constraintTop_toBottomOf="@+id/memberName_TIL"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/memberName_TIL"
+                            app:errorEnabled="true"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:hint="@string/amount_ghs" >
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:gravity="end"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/amount_ET"
+                                android:inputType="numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/description_TIL"
+                            app:layout_constraintTop_toBottomOf="@+id/amount_TIL"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/memberName_TIL"
+                            app:errorEnabled="true"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:hint="@string/description" >
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/description_ET"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pay_via_mobile_money"
+                            app:layout_constraintTop_toBottomOf="@+id/description_TIL"
+                            android:id="@+id/momoCheckbox"
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/momoCheckbox"
+                            app:errorEnabled="true"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/description_TIL"
+                            android:id="@+id/momo_TIL"
+                            android:hint="@string/mobile_money_number">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="phone"
+                                android:id="@+id/momo_Et"
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                            android:onClick="pay"
+                            android:textColor="@color/colorWhite"
+                            android:id="@+id/payBtn"
+                            android:backgroundTint="@color/colorPrimary"
+                            app:icon="@drawable/payments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pay"
+                            app:layout_constraintEnd_toEndOf="@+id/description_TIL"
+                            app:layout_constraintTop_toBottomOf="@+id/momo_TIL" />
+
+<!--                        <com.google.android.material.button.MaterialButton-->
+<!--                            android:id="@+id/payBtn"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/pay"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintEnd_toEndOf="@id/description_TIL"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/momo_TIL" />-->
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </ScrollView>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

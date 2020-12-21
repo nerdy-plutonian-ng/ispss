@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <ScrollView
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bankAccountNumber_TIL"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    android:hint="Bank Account Number"
+                    app:layout_constraintTop_toTopOf="parent"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/bankAccountNo_Et"
+                        android:gravity="end"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bankAccountName_TIL"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    android:hint="Bank Account Name"
+                    app:layout_constraintTop_toBottomOf="@+id/bankAccountNumber_TIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/bankAccountName_Et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bankName_TIL"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    android:hint="Bank Name"
+                    app:layout_constraintTop_toBottomOf="@+id/bankAccountName_TIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/bankName_Et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bankBranch_TIL"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    android:hint="Bank Branch"
+                    app:layout_constraintTop_toBottomOf="@+id/bankName_TIL"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/bankBranch_Et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:fontFamily="@font/roboto"
+                    android:id="@+id/accountTypeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Choose Account Type:"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bankBranch_TIL" />
+
+                <Spinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    app:layout_constraintTop_toBottomOf="@+id/accountTypeLabel"
+                    android:padding="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/bank_account_types"
+                    android:id="@+id/bankAccountTypeSpinner" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/editButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Edit"
+                    android:drawableEnd="@drawable/edit"
+                    app:layout_constraintTop_toBottomOf="@+id/momoAccountName_TIL" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

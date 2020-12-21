@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            android:id="@+id/providerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Choose you network provider:" />
+
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/providers"
+            android:id="@+id/providersSpinner"
+            app:layout_constraintTop_toBottomOf="@+id/providerLabel"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintTop_toBottomOf="@+id/providersSpinner"
+            app:layout_constraintStart_toStartOf="parent"
+            android:hint="@string/mobile_money_number"
+            app:errorEnabled="true"
+            android:id="@+id/momoNumber_TIL" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/momoNumber_ET"
+                android:maxLength="10"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintTop_toBottomOf="@+id/momoNumber_TIL"
+            app:layout_constraintStart_toStartOf="parent"
+            android:hint="@string/momo_account_name"
+            app:errorEnabled="true"
+            android:id="@+id/momoAccountName_TIL" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/momoAccountName_ET"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/editButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:drawableEnd="@drawable/edit"
+            app:layout_constraintTop_toBottomOf="@+id/momoAccountName_TIL" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

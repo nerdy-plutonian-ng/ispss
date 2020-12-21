@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">ISPSS</string>
+    <string name="app_title">Informal Sector Payment &amp; Savings Scheme</string>
+    <string name="start">start</string>
+    <string name="user_login">User Login</string>
+    <string name="sharedPrefs">com.persol.ispss.SHARED_PREFERENCES</string>
+    <string name="login_instruction">Login with your user ID</string>
+    <string name="register_user">Not a user? <u>REGISTER</u></string>
+    <string name="register">Register</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="please_wait">please wait</string>
+    <string name="user_registration_successful">Success registering user</string>
+    <string name="empty_error">This field can not be empty</string>
+    <string name="invalid_email_error">Invalid email</string>
+    <string name="invalid_date_error">Invalid date</string>
+    <string name="user_id">USER_ID</string>
+    <string name="name">NAME</string>
+    <string name="createdat">createdAt</string>
+    <string name="mmc">mmc</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register_a_member">Register a Member</string>
+    <string name="next">next</string>
+    <string name="residence">Residence</string>
+    <string name="hometown">Hometown</string>
+    <string name="occupation">Occupation</string>
+    <string name="savings_configuration">Savings Configuration</string>
+    <string name="max_month_contribution">Maximum monthly contribution (GHS)</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="beneficiaries">Beneficiaries</string>
+    <string name="add">add</string>
+    <string name="save">save</string>
+    <string name="remove">Remove</string>
+    <string name="zero_error">Value has to be greater than 0</string>
+    <string name="pay">Pay</string>
+    <string name="mobile_money_number">Mobile money number</string>
+    <string name="pay_via_mobile_money">Pay via Mobile Money</string>
+    <string name="description">Description</string>
+    <string name="amount_ghs">Amount(GHS)</string>
+    <string name="member_id">Member ID</string>
+    <string name="verify_member_error">Verify Member first</string>
+    <string name="no_such_user">No such user</string>
+    <string name="enter_valid_user">Enter a valid user ID</string>
+    <string name="select_fund_to_contribute_to">Select Fund to Contribute to:</string>
+    <string name="contribute">Contribute</string>
+    <string name="no_schemes_registered">You are not registered with any Scheme</string>
+    <string name="percentage_on_payments_to_save">Percentage(%) on payments to save</string>
+    <string name="choose_a_scheme">Choose a scheme:</string>
+    <string name="add_a_beneficiary">Add a Beneficiary</string>
+    <string name="add_beneficiary">Add Beneficiary</string>
+    <string name="Schemes">Schemes</string>
+    <string name="last_sync">lastSync</string>
+    <string name="momo">momo</string>
+    <string name="bank">bank</string>
+    <string name="momo_account_name">Mobile Money Acoount Name</string>
+    <string name="messageid">messageId</string>
+    <string name="edit">Edit</string>
+    <string name="add_scheme">Add Scheme</string>
+    <string name="confirm">Confirm</string>
+    <string name="confirm_remove_beneficiary">Are you sure you want to remove this beneficiary?</string>
+    <string name="select_scheme_to_withdraw_from">Select scheme to withdraw from:</string>
+    <string name="withdraw">withdraw</string>
+    <string name="scheme_setup">Scheme Setup</string>
+    <string name="appr">Percentage(%) to save on payments received</string>
+    <string name="update">Update</string>
+    <string name="favourites">favourites</string>
+    <string name="member_name">Member Name</string>
+    <string name="first_time">first_time</string>
+    <string name="fav_first_time">fav_first_time</string>
+    <string name="id">_id</string>
+    <string name="scheme">scheme</string>
+    <string name="add_a_payee">Add a payee</string>
+
+    <string-array name="bank_account_types">
+        <item>Savings Account</item>
+        <item>Current Account</item>
+    </string-array>
+    <string-array name="relations">
+        <item>Spouse</item>
+        <item>Child</item>
+        <item>Sibling</item>
+        <item>Cousin</item>
+        <item>Friend</item>
+    </string-array>
+    <string-array name="providers">
+        <item>MTN GH</item>
+        <item>Vodafone GH</item>
+        <item>AirTel GH</item>
+    </string-array>
+    <string-array name="schemes">
+        <item>Axis Pensions</item>
+        <item>Enterprise Pensions</item>
+        <item>Metropolitan Pensions</item>
+    </string-array>
+</resources>

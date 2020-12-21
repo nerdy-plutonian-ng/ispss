@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".BeneficiariesActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:elevation="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/beneficiaryAppBar"
+        android:background="@color/colorPrimary"
+        app:title="Beneficiaries"
+        app:titleTextColor="@color/colorWhite"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/beneficiaryAppBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        android:id="@+id/emptySchemeCL"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ImageView
+            android:id="@+id/emptyDrawableIV"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/schemes" />
+
+        <TextView
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/emptyDrawableIV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:text="@string/no_schemes_registered" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="#90000000"
+        app:layout_constraintTop_toBottomOf="@+id/beneficiaryAppBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/schemesLabel"
+            android:text="Your Beneficiaries"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/roboto"
+            android:textSize="25sp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:background="#99ffffff"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/schemesLabel"
+            android:id="@+id/beneficiariesListview" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        app:icon="@drawable/add"
+        android:text="@string/add_beneficiary"
+        android:tooltipText="@string/add_beneficiary"
+        android:layout_margin="10dp"
+        android:src="@drawable/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/addBeneficiaryButton"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

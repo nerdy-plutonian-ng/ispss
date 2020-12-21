@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/collapsed"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/collapsedExpand_IV" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Michael Appiah-Kubi"
+            app:layout_constraintStart_toEndOf="@+id/collapsedExpand_IV"
+            app:layout_constraintEnd_toStartOf="@+id/edit_IV"
+            android:fontFamily="@font/roboto_bold"
+            android:id="@+id/nameTV" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/nameTV"
+            android:text="Brother"
+            app:layout_constraintStart_toEndOf="@+id/collapsedExpand_IV"
+            app:layout_constraintEnd_toStartOf="@+id/edit_IV"
+            android:fontFamily="@font/roboto"
+            android:id="@+id/relationshipTV" />
+
+
+        <ImageView
+            android:layout_marginEnd="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/edit_primary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/delete_IV"
+            android:id="@+id/edit_IV" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/delete_IV" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            app:layout_constraintTop_toBottomOf="@+id/relationshipTV"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
