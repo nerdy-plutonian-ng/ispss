@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools2="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/nameTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools2:text="Bruce Banner"
+        tools:layout_constraintStart_toStartOf="parent"
+        tools:layout_constraintEnd_toStartOf="@+id/delete_IV"
+        tools:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/roboto"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/delete"
+        android:id="@+id/delete_IV" />
+
+    <EditText
+        android:gravity="end"
+        android:id="@+id/percentageET"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:maxLength="6"
+        android:inputType="numberDecimal"
+        tools:layout_constraintStart_toStartOf="parent"
+        tools:layout_constraintTop_toBottomOf="@+id/nameTV" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_constraintTop_toTopOf="@+id/percentageET"
+        tools:layout_constraintBottom_toBottomOf="@+id/percentageET"
+        tools:layout_constraintStart_toEndOf="@+id/percentageET"
+        android:text="%" />
+
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        tools:layout_constraintTop_toBottomOf="@+id/percentageET" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

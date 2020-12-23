@@ -77,17 +77,6 @@
             android:id="@+id/schemesRecycler" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        app:icon="@drawable/add"
-        android:text="@string/add_scheme"
-        android:tooltipText="@string/add_scheme"
-        android:layout_margin="10dp"
-        android:src="@drawable/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/addSchemeBtn"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

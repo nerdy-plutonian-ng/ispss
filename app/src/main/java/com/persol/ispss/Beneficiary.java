@@ -1,5 +1,6 @@
 package com.persol.ispss;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ public class Beneficiary {
     private double percentage;
     private String gender;
     private boolean expanded;
+    private Scheme[] schemes;
 
     public Beneficiary(String id, String firstName, String lastName, Date dob, String phone, String relationship, double percentage, String gender) {
         this.id = id;
@@ -24,6 +26,8 @@ public class Beneficiary {
         this.relationship = relationship;
         this.percentage = percentage;
         this.gender = gender;
+        this.expanded = false;
+        this.schemes = new Scheme[0];
     }
 
     public Beneficiary(String id, String firstName, String lastName, double percentage) {
@@ -35,6 +39,8 @@ public class Beneficiary {
         this.phone = "0";
         this.relationship = "";
         this.gender = "Male";
+        this.expanded = false;
+        this.schemes = new Scheme[0];
     }
 
     public Beneficiary(String firstName, String lastName, Date dob, String phone, String relationship, double percentage, String gender) {
@@ -46,7 +52,23 @@ public class Beneficiary {
         this.relationship = relationship;
         this.percentage = percentage;
         this.gender = gender;
+        this.expanded = false;
+        this.schemes = new Scheme[0];
     }
+
+    public Beneficiary(String id, String firstName, String lastName, Date dob, String phone, String relationship, double percentage, String gender, Scheme[] schemes) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.phone = phone;
+        this.relationship = relationship;
+        this.percentage = percentage;
+        this.gender = gender;
+        this.schemes = schemes;
+        this.expanded = false;
+    }
+
 
     public String getId() {
         return id;
@@ -118,5 +140,13 @@ public class Beneficiary {
 
     public void setExpanded(boolean expanded) {
         this.expanded = expanded;
+    }
+
+    public Scheme[] getSchemes() {
+        return schemes;
+    }
+
+    public void setSchemes(Scheme[] schemes) {
+        this.schemes = schemes;
     }
 }

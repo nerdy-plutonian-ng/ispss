@@ -32,7 +32,7 @@ public class PayeeDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.add_beneficiary_card, null);
+        final View view = inflater.inflate(R.layout.payee_card, null);
 
         final TextInputLayout name_TIL = view.findViewById(R.id.name_TIL);
         final TextInputLayout phone_TIL = view.findViewById(R.id.phone_TIL);

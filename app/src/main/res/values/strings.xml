@@ -78,6 +78,10 @@
     <string name="id">_id</string>
     <string name="scheme">scheme</string>
     <string name="add_a_payee">Add a payee</string>
+    <string name="select_beneficiaries">Select Beneficiaries</string>
+    <string name="savings">savings</string>
+    <string name="percentage">percentage</string>
+    <string name="total_ghs">Total(GHS)</string>
 
     <string-array name="bank_account_types">
         <item>Savings Account</item>

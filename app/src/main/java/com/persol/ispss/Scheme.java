@@ -10,6 +10,16 @@ public class Scheme implements Serializable {
     private double percentage;
     private Date startDate;
     private double savings;
+    private Beneficiary[] beneficiaries;
+
+    public Scheme(String id, String name, double percentage, Date startDate, double savings, Beneficiary[] beneficiaries) {
+        this.id = id;
+        this.name = name;
+        this.percentage = percentage;
+        this.startDate = startDate;
+        this.savings = savings;
+        this.beneficiaries = beneficiaries;
+    }
 
     public Scheme(String id, String name, double percentage, Date startDate, double savings) {
         this.id = id;
@@ -22,6 +32,8 @@ public class Scheme implements Serializable {
     public Scheme(String id, String name) {
         this.id = id;
         this.name = name;
+        this.percentage = 0.00;
+        this.savings = 0.00;
     }
 
     public Scheme(String id, double percentage) {
@@ -67,6 +79,14 @@ public class Scheme implements Serializable {
 
     public void setSavings(double savings) {
         this.savings = savings;
+    }
+
+    public Beneficiary[] getBeneficiaries() {
+        return beneficiaries;
+    }
+
+    public void setBeneficiaries(Beneficiary[] beneficiaries) {
+        this.beneficiaries = beneficiaries;
     }
 
     public boolean isEqualTo(Scheme otherScheme){

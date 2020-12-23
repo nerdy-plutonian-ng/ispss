@@ -46,6 +46,7 @@ import static com.persol.ispss.Constants.DOMAIN;
 import static com.persol.ispss.Constants.EMERGENT_REDIRECT;
 import static com.persol.ispss.Constants.GENERATE_PAYMENT_INVOICE;
 import static com.persol.ispss.Constants.GET_A_MEMBER;
+import static com.persol.ispss.Constants.GET_MEMBER_NO_FILTER;
 import static com.persol.ispss.Constants.ISPSS;
 import static com.persol.ispss.Constants.PAY_URL_TEST;
 
@@ -313,17 +314,16 @@ public class PayDialog extends DialogFragment {
     private void getMemberName(String userId){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                DOMAIN+GET_A_MEMBER+userId,
+                DOMAIN+GET_MEMBER_NO_FILTER+userId,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("test", response.toString() );
-
                         try {
+                            Log.e("test", response.getJSONArray("body").getJSONObject(0).toString() );
                             if(response.getInt("code") == 0){
-                                JSONObject body = response.getJSONObject("body");
-
+                                JSONObject body = response.getJSONArray("body").getJSONObject(0);
+                                Log.d(ISPSS, "onResponse: "+body.toString());
                                 String fName = body.getString("firstName");
                                 String mName = body.getString("middleName");
                                 String lName = body.getString("lastName");
@@ -334,6 +334,7 @@ public class PayDialog extends DialogFragment {
                                 payeeNameTV.setVisibility(View.VISIBLE);
                                 setFaveDefaults();
                             } else {
+                                Log.d(ISPSS, "onResponse: code = "+response.getInt("code"));
                                 payeeNameTV.setTextColor(Color.parseColor("#FF0000"));
                                 payeeNameTV.setText(getString(R.string.no_such_user));
                                 searchedMemberId = "";
@@ -346,6 +347,7 @@ public class PayDialog extends DialogFragment {
                             searchedMemberId = "";
                             searchedMemberName = "";
                             faved = false;
+                            Log.d(ISPSS, "onResponse: "+e.toString());
                         }
 
                     }

@@ -27,10 +27,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.persol.ispss.Constants.Beneficiaries;
 import static com.persol.ispss.Constants.DOMAIN;
 import static com.persol.ispss.Constants.GET_ALL_BENEFICIARIES;
+import static com.persol.ispss.Constants.GET_ALL_BENEFICIARIES_WITH_SCHEMES;
 import static com.persol.ispss.Constants.ISPSS;
 
 public class BeneficiaryActivity extends AppCompatActivity {
@@ -63,24 +65,34 @@ public class BeneficiaryActivity extends AppCompatActivity {
         ispssManager.showDialog(dialogFragment,"loader");
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                DOMAIN + GET_ALL_BENEFICIARIES + ispssManager.getContributorID(),
+                DOMAIN + GET_ALL_BENEFICIARIES_WITH_SCHEMES + ispssManager.getContributorID() + "/Schemes",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            Log.d(ISPSS, "onResponse: "+response.toString());
                             if(response.getInt("code") == 0) {
                                 JSONArray data = response.getJSONArray("body");
                                 Beneficiaries = new Beneficiary[data.length()];
                                 for(int i = 0; i < data.length();i++) {
+                                    JSONArray schemesArray = data.getJSONObject(i).getJSONArray("schemes");
+                                    Log.d(ISPSS, "onResponse: schemesArray = "+schemesArray.toString());
+                                    Scheme[] schemes = new Scheme[schemesArray.length()];
+                                    for(int j = 0; j < schemesArray.length();j++){
+                                        Log.d(ISPSS, "onResponse: "+"shouldnt be here");
+                                        schemes[j] = new Scheme(schemesArray.getJSONObject(j).getString("schemeId"),
+                                                schemesArray.getJSONObject(j).getDouble("percentage"));
+                                    }
                                     beneficiaries.add(new Beneficiary(data.getJSONObject(i).getString("id"),
                                             data.getJSONObject(i).getString("firstName"),
                                             data.getJSONObject(i).getString("lastName"),
                                             Utils.getDateNoTime(data.getJSONObject(i).getString("dob")),
                                             data.getJSONObject(i).getString("phoneNumber"),
                                             data.getJSONObject(i).getString("relationshipId"),
-                                            data.getJSONObject(i).getDouble("percentage"),
-                                            data.getJSONObject(i).getString("gender")));
+                                            0.00,
+                                            data.getJSONObject(i).getString("gender"),
+                                            schemes));
                                     Beneficiaries[i] = beneficiaries.get(i);
                                     Log.d("ben Dob", data.getJSONObject(i).getString("dob"));
                                 }
@@ -118,6 +130,8 @@ public class BeneficiaryActivity extends AppCompatActivity {
             case R.id.add:
                 dialogFragment = new AddNewBeneficiaryDialog();
                 ispssManager.showDialog(dialogFragment,"addNewBeneficiary");
+                break;
+            case R.id.favourites:
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -4,15 +4,20 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
+
 public class HistoryActivity extends AppCompatActivity {
 
-    private ListView transactionsListview;
-    private String[] names = {"John","Mark","Susan","Pete","Irene","Mark","Susan","Pete","Irene","Mark","Susan","Pete","Irene","Mark","Susan","Pete","Irene"};
+    private RecyclerView transactionsRecycler;
+    private ArrayList<Transaction> transactions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +31,18 @@ public class HistoryActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setIcon(ContextCompat.getDrawable(this,R.drawable.history));
 
-        transactionsListview = findViewById(R.id.transactionsListviews);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,names);
-        transactionsListview.setAdapter(arrayAdapter);
+        transactionsRecycler = findViewById(R.id.historyRecycler);
+
+        transactions = new ArrayList<>();
+        transactions.add(new Transaction(UUID.randomUUID().toString(),"Withdrawal",200.00,new Date()));
+        transactions.add(new Transaction(UUID.randomUUID().toString(),"Contribution",100.00,new Date()));
+        transactions.add(new Transaction(UUID.randomUUID().toString(),"Withdrawal",50.00,new Date()));
+        transactions.add(new Transaction(UUID.randomUUID().toString(),"Contribution",150.00,new Date()));
+        transactions.add(new Transaction(UUID.randomUUID().toString(),"Contribution",500.00,new Date()));
+
+        transactionsRecycler.setHasFixedSize(true);
+        TransactionsAdapter transactionsAdapter = new TransactionsAdapter(this,transactions);
+        transactionsRecycler.setAdapter(transactionsAdapter);
+
     }
 }

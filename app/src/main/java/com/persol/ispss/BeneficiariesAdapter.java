@@ -50,6 +50,7 @@ public class BeneficiariesAdapter extends RecyclerView.Adapter<BeneficiariesAdap
                 break;
             }
         }
+
         holder.relationshipTV.setText(relationship);
         holder.toggleIV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,9 +58,11 @@ public class BeneficiariesAdapter extends RecyclerView.Adapter<BeneficiariesAdap
                 if(beneficiaries.get(position).isExpanded()){
                     holder.toggleIV.setImageResource(R.drawable.collapsed);
                     holder.listView.setVisibility(View.GONE);
+                    holder.listView.setVisibility(View.GONE);
                     beneficiaries.get(position).setExpanded(false);
                 } else {
                     holder.toggleIV.setImageResource(R.drawable.expanded);
+                    holder.listView.setVisibility(View.VISIBLE);
                     holder.listView.setVisibility(View.VISIBLE);
                     beneficiaries.get(position).setExpanded(true);
                 }

@@ -1,5 +1,6 @@
 package com.persol.ispss;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,12 +32,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import static com.persol.ispss.Constants.CONTRIBUTORS_SCHEMES;
 import static com.persol.ispss.Constants.DOMAIN;
 import static com.persol.ispss.Constants.DOMAIN_ADMIN;
+import static com.persol.ispss.Constants.ISPSS;
 import static com.persol.ispss.Constants.SCHEMES_LIST;
 import static com.persol.ispss.Constants.SchemesGlobal;
 
@@ -45,7 +50,6 @@ public class SchemeActivity extends AppCompatActivity {
     private boolean addSchemeClicked = false;
     private ConstraintLayout emptyCL;
     private RecyclerView recyclerView;
-    private ExtendedFloatingActionButton addSchemeBtn;
     private ArrayList<Scheme> contributorRegisteredSchemes;
     private SchemesAdapter.Listener schemeListener;
 
@@ -63,15 +67,12 @@ public class SchemeActivity extends AppCompatActivity {
 
         ispss_manager = new ISPSSManager(this);
 
-
-
         emptyCL = findViewById(R.id.emptySchemeCL);
         recyclerView = findViewById(R.id.schemesRecycler);
         recyclerView.setHasFixedSize(true);
         // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        addSchemeBtn = findViewById(R.id.addSchemeBtn);
 
         if(ispss_manager.getUserType() == 0){
             emptyCL.setVisibility(View.VISIBLE);
@@ -84,7 +85,7 @@ public class SchemeActivity extends AppCompatActivity {
             ispss_manager.showDialog(dialogFragment,"loader");
             RequestQueue queue = Volley.newRequestQueue(this);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                    DOMAIN + CONTRIBUTORS_SCHEMES + ispss_manager.getContributorID(),
+                    DOMAIN + CONTRIBUTORS_SCHEMES + ispss_manager.getContributorID()+"/Members",
                     null,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -96,17 +97,24 @@ public class SchemeActivity extends AppCompatActivity {
                                     JSONArray jsonArray = body.getJSONArray("schemes");
                                     for(int i = 0;i < jsonArray.length();i++){
                                         JSONObject data = jsonArray.getJSONObject(i);
+                                       // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
                                         Scheme scheme = new Scheme(data.getString("schemeId"),
                                                 data.getString("schemeName"),data.getDouble("appr"),
-                                                new Date(),data.getDouble("balance"));
+                                                Utils.getDateNoTime(data.getString("createdAt")),data.getDouble("balance"));
                                         schemeArrayList.add(scheme);
+                                        Log.d(ISPSS, "onResponse: "+scheme.getStartDate().toString());
                                     }
                                     SchemesAdapter schemesAdapter = new SchemesAdapter(schemeArrayList);
                                     schemeListener = new SchemesAdapter.Listener() {
                                         @Override
                                         public void onClick(int position) {
                                             Intent intent = new Intent(SchemeActivity.this,SingleSchemeActivity.class);
-                                            intent.putExtra(getString(R.string.scheme),schemeArrayList.get(position));
+                                            intent.putExtra(getString(R.string.id),schemeArrayList.get(position).getId());
+                                            intent.putExtra(getString(R.string.name),schemeArrayList.get(position).getName());
+                                            intent.putExtra(getString(R.string.savings),schemeArrayList.get(position).getSavings());
+                                            intent.putExtra(getString(R.string.start),Utils.getHumanDate(schemeArrayList.get(position).getStartDate()));
+                                            intent.putExtra(getString(R.string.percentage),schemeArrayList.get(position).getPercentage());
                                             startActivity(intent);
 //                                            dialogFragment = new EditSchemeDialog(schemeArrayList.get(position).getId(),
 //                                                    schemeArrayList.get(position).getName(),schemeArrayList.get(position).getPercentage());
@@ -132,18 +140,6 @@ public class SchemeActivity extends AppCompatActivity {
                     });
             queue.add(jsonObjectRequest);
         }
-
-        addSchemeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(SchemesGlobal.size() == contributorRegisteredSchemes.size()){
-                    Toast.makeText(SchemeActivity.this, "You are registered with all available schemes", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                DialogFragment addSchemeFragement = new AddSchemeDialog(SchemesGlobal,contributorRegisteredSchemes);
-                ispss_manager.showDialog(addSchemeFragement,"addScheme");
-            }
-        });
     }
 
     public void refreshPage(){
@@ -172,7 +168,7 @@ public class SchemeActivity extends AppCompatActivity {
                                     for(int i = 0;i < jsonArray.length();i++){
                                         JSONObject data = jsonArray.getJSONObject(i);
                                         Scheme scheme = new Scheme(data.getString("schemeId"),
-                                                data.getString("schemeName"),data.getDouble("appr"),new Date(),data.getDouble("balance"));
+                                                data.getString("schemeName"),data.getDouble("appr"),Utils.getDate(data.getString("createdAt")),data.getDouble("balance"));
                                         schemeArrayList.add(scheme);
                                     }
                                     SchemesAdapter schemesAdapter = new SchemesAdapter(schemeArrayList);
@@ -205,4 +201,24 @@ public class SchemeActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.add:
+                if(SchemesGlobal.size() == contributorRegisteredSchemes.size()){
+                    Toast.makeText(SchemeActivity.this, "You are registered with all available schemes", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                DialogFragment addSchemeFragement = new AddSchemeDialog(SchemesGlobal,contributorRegisteredSchemes);
+                ispss_manager.showDialog(addSchemeFragement,"addScheme");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

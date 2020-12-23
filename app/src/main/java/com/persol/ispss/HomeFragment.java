@@ -64,15 +64,17 @@ public class HomeFragment extends Fragment {
         final ArrayList<Menu> menus = new ArrayList<>();
         menus.add(new Menu(1,"Add a Member",R.drawable.register_contributor));
         menus.add(new Menu(2,"Pay a Member",R.drawable.pay_contributor));
-        menus.add(new Menu(3,"History",R.drawable.pay_contributor));
+
         if (ispss_manager.getUserType() == 1) {
+            menus.add(new Menu(3,"Contribute",R.drawable.contribute));
             menus.add(new Menu(4,"Savings",R.drawable.savings));
             menus.add(new Menu(5,"Schemes",R.drawable.schemes));
             menus.add(new Menu(6,"Beneficiaries",R.drawable.beneficiaries));
             menus.add(new Menu(7,"Withdrawals",R.drawable.withdrawals));
-            menus.add(new Menu(8,"Contribute",R.drawable.contribute));
+            menus.add(new Menu(8,"History",R.drawable.pay_contributor));
         } else {
-            menus.add(new Menu(4,"Join a Scheme",R.drawable.become_contributor));
+            menus.add(new Menu(3,"Join a Scheme",R.drawable.become_contributor));
+            menus.add(new Menu(4,"History",R.drawable.pay_contributor));
         }
         MenuAdapter menuAdapter = new MenuAdapter(getActivity(),menus);
         menuAdapter.setListener(new MenuAdapter.Listener() {
@@ -88,16 +90,18 @@ public class HomeFragment extends Fragment {
                     case 1:
                         intent = new Intent(getActivity(),PayActivity.class);
                         startActivity(intent);
-//                        dialogFragment = new PayDialog();
-//                        ispss_manager.showDialog(dialogFragment,"pay");
                         break;
                     case 2:
-                        intent = new Intent(getActivity(),HistoryActivity.class);
-                        startActivity(intent);
+                        if(ispss_manager.getUserType() == 0){
+                            intent = new Intent(getActivity(),JoinSchemeActivity.class);
+                            startActivity(intent);
+                        } else {
+                            showContributeWithdrawalDialog(WITHDRAW_PAGE);
+                        }
                         break;
                     case 3:
                         if(ispss_manager.getUserType() == 0){
-                            intent = new Intent(getActivity(),JoinSchemeActivity.class);
+                            intent = new Intent(getActivity(),HistoryActivity.class);
                         } else {
                             intent = new Intent(getActivity(),SavingsConfigActivity.class);
                         }
@@ -115,7 +119,8 @@ public class HomeFragment extends Fragment {
                         showContributeWithdrawalDialog(WITHDRAW_PAGE);
                         break;
                     case 7:
-                        showContributeWithdrawalDialog(CONTRIBUTE_PAGE);
+                        intent = new Intent(getActivity(),HistoryActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }

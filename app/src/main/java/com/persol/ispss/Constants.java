@@ -29,6 +29,7 @@ public class Constants {
     public static final String GENERATE_PAYMENT_INVOICE = "Payments/Create";
     public static final String GENERATE_CONTRIBUTION_INVOICE = "Contributions/Create";
     public static final String GET_A_MEMBER = "Members/GetByMemberID?memberID=";
+    public static final String GET_MEMBER_NO_FILTER = "Members/GetMembersBySearchTerm?searchTerm=";
     public static final String GET_ALL_SCHEMES = "Externals/Schemes";
     public static final String GET_ALL_RELATIONSHIPS = "Generics/GetGenericsByType/REL";
     public static final String GET_BANK_ACCOUNT_TYPES = "Generics/GetGenericsByType/BAT";
@@ -44,6 +45,7 @@ public class Constants {
     public static final String WITHDRAWAL = "Withdrawals/PlaceRequest";
     public static final String UPDATE_SCHEME_CONFIG = "SchemeAccounts/Update";
     public static final String DELETE_BENEFICIARY = "Beneficiaries/Remove/";
+    public static final String GET_ALL_BENEFICIARIES_WITH_SCHEMES = "Beneficiaries/";
 
     public static final String NAME = "NAME";
     public static final String JOINED = "JOINED";

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,8 @@ public class BatchPayActivity extends AppCompatActivity {
     private BatchPaymentsAdapter adapter;
     private RecyclerView recyclerView;
     private ISPSSManager ispssManager;
+    private TextView instructionTV;
+    private ConstraintLayout total_CL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class BatchPayActivity extends AppCompatActivity {
         ab.setIcon(ContextCompat.getDrawable(this,R.drawable.payments));
 
         recyclerView = findViewById(R.id.payeeRecycler);
+        instructionTV = findViewById(R.id.batchPaymentsLabel);
+        total_CL = findViewById(R.id.total_CL);
 
         ispssManager = new ISPSSManager(this);
         payees = new ArrayList<>();
@@ -53,7 +58,6 @@ public class BatchPayActivity extends AppCompatActivity {
         updateTotal();
 
         MaterialButton button = findViewById(R.id.editButton);
-        button.setOnClickListener(new Butt());
 
 
     }
@@ -61,6 +65,11 @@ public class BatchPayActivity extends AppCompatActivity {
     public void notifyInsertion(){
         recyclerView.getAdapter().notifyItemInserted(payees.size());
         updateTotal();
+        if(payees.size() == 1) {
+            instructionTV.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            total_CL.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -92,14 +101,5 @@ public class BatchPayActivity extends AppCompatActivity {
         }
         totalTV.setText(Utils.formatMoney(total));
 
-    }
-
-
-    class Butt implements View.OnClickListener{
-
-        @Override
-        public void onClick(View view) {
-
-        }
     }
 }

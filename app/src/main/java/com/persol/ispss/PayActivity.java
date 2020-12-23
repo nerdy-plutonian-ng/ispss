@@ -49,6 +49,7 @@ import static com.persol.ispss.Constants.DOMAIN;
 import static com.persol.ispss.Constants.EMERGENT_REDIRECT;
 import static com.persol.ispss.Constants.GENERATE_PAYMENT_INVOICE;
 import static com.persol.ispss.Constants.GET_A_MEMBER;
+import static com.persol.ispss.Constants.GET_MEMBER_NO_FILTER;
 import static com.persol.ispss.Constants.ISPSS;
 import static com.persol.ispss.Constants.PAY_URL_TEST;
 
@@ -147,8 +148,6 @@ public class PayActivity extends AppCompatActivity {
                 }
             }
         });
-
-
 
 
         momoCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -276,17 +275,15 @@ public class PayActivity extends AppCompatActivity {
     private void getMemberName(String userId){
         RequestQueue queue = Volley.newRequestQueue(PayActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                DOMAIN+GET_A_MEMBER+userId,
+                DOMAIN+GET_MEMBER_NO_FILTER+userId,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("test", response.toString() );
-
                         try {
                             if(response.getInt("code") == 0){
-                                JSONObject body = response.getJSONObject("body");
-
+                                JSONObject body = response.getJSONArray("body").getJSONObject(0);
                                 String fName = body.getString("firstName");
                                 String mName = body.getString("middleName");
                                 String lName = body.getString("lastName");
