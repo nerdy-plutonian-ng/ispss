@@ -3,7 +3,6 @@ package com.persol.ispss;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
@@ -49,6 +48,7 @@ import static com.persol.ispss.Constants.DOMAIN;
 import static com.persol.ispss.Constants.EMERGENT_REDIRECT;
 import static com.persol.ispss.Constants.GENERATE_PAYMENT_INVOICE;
 import static com.persol.ispss.Constants.GET_A_MEMBER;
+import static com.persol.ispss.Constants.GET_MEMBER_GENERIC;
 import static com.persol.ispss.Constants.GET_MEMBER_NO_FILTER;
 import static com.persol.ispss.Constants.ISPSS;
 import static com.persol.ispss.Constants.PAY_URL_TEST;
@@ -105,10 +105,6 @@ public class PayActivity extends AppCompatActivity {
         memberID_Et = findViewById(R.id.memberID_ET);
         memberID_TIL = findViewById(R.id.memberID_TIL);
 
-        if(ispss_manager.isFavFirstTime()){
-            showTips();
-        }
-
         dialogFragment = new Loader();
 
         favouriteArrayList = ispss_manager.getFavourites();
@@ -140,7 +136,7 @@ public class PayActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(editable.toString().length() == 7){
+                if(editable.toString().length() == 7 || editable.toString().length() == 10){
                     getMemberName(memberID_Et.getText().toString());
                 } else {
                     memberName_Et.getText().clear();
@@ -198,6 +194,10 @@ public class PayActivity extends AppCompatActivity {
     }
 
     public void showFavouriteList(View view) {
+        if(favNames.length < 1){
+            Toast.makeText(this, "You have no favourites yet", Toast.LENGTH_SHORT).show();
+            return;
+        }
         memberID_Et.showDropDown();
     }
 
@@ -275,7 +275,7 @@ public class PayActivity extends AppCompatActivity {
     private void getMemberName(String userId){
         RequestQueue queue = Volley.newRequestQueue(PayActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                DOMAIN+GET_MEMBER_NO_FILTER+userId,
+                DOMAIN+GET_MEMBER_GENERIC+userId,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override

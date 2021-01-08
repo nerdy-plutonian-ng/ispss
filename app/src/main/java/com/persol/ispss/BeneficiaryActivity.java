@@ -71,16 +71,13 @@ public class BeneficiaryActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.d(ISPSS, "onResponse: "+response.toString());
                             if(response.getInt("code") == 0) {
                                 JSONArray data = response.getJSONArray("body");
                                 Beneficiaries = new Beneficiary[data.length()];
                                 for(int i = 0; i < data.length();i++) {
                                     JSONArray schemesArray = data.getJSONObject(i).getJSONArray("schemes");
-                                    Log.d(ISPSS, "onResponse: schemesArray = "+schemesArray.toString());
                                     Scheme[] schemes = new Scheme[schemesArray.length()];
                                     for(int j = 0; j < schemesArray.length();j++){
-                                        Log.d(ISPSS, "onResponse: "+"shouldnt be here");
                                         schemes[j] = new Scheme(schemesArray.getJSONObject(j).getString("schemeId"),
                                                 schemesArray.getJSONObject(j).getDouble("percentage"));
                                     }

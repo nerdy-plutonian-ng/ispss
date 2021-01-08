@@ -13,12 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static com.persol.ispss.Constants.ISPSS;
+
 public class SchemeBeneficiaryAdapter extends RecyclerView.Adapter<SchemeBeneficiaryAdapter.ViewHolder> {
 
     private ArrayList<Beneficiary> beneficiaries;
 
     public SchemeBeneficiaryAdapter(ArrayList<Beneficiary> beneficiaries) {
         this.beneficiaries = beneficiaries;
+        for(Beneficiary beneficiary : beneficiaries){
+            Log.d(ISPSS, "SchemeBeneficiaryAdapter: percentage = "+beneficiary.getPercentage());
+        }
     }
 
     @NonNull

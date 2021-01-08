@@ -548,5 +548,16 @@ public class ISPSSManager {
         return 1000000000;
     }
 
+    public String getSchemeName(String id){
+        String name = "";
+        for(Scheme scheme : SchemesGlobal){
+            if(scheme.getId().equals(id)){
+                name = scheme.getName();
+                return name;
+            }
+        }
+        return name;
+    }
+
 
 }

@@ -58,7 +58,7 @@ public class BeneficiariesActivity extends AppCompatActivity {
         ispssManager.showDialog(dialogFragment,"loader");
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                DOMAIN + GET_ALL_BENEFICIARIES + ispssManager.getContributorID(),
+                DOMAIN + GET_ALL_BENEFICIARIES + ispssManager.getContributorID() + "/Schemes",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override

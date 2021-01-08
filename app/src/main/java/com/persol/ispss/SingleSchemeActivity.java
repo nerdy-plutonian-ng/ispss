@@ -26,6 +26,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,6 +34,7 @@ import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 import static com.persol.ispss.Constants.Beneficiaries;
@@ -53,6 +55,9 @@ public class SingleSchemeActivity extends AppCompatActivity {
     private TextView savingsTV;
     private TextView startDateTV;
     private Intent intent;
+    private Gson gson;
+    private Beneficiary[] schemeBeneficiaries;
+    private ArrayList<Beneficiary> availableBeneficiaries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +70,24 @@ public class SingleSchemeActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         intent = getIntent();
-        ab.setTitle(intent.getStringExtra(getString(R.string.name)));
+
+        gson = new Gson();
+        String schemeJSONStr = intent.getStringExtra(getString(R.string.scheme));
+        Log.d(ISPSS, "onCreate: "+schemeJSONStr);
+        final Scheme scheme = gson.fromJson(schemeJSONStr,Scheme.class);
+        ab.setTitle(scheme.getName());
+
+        schemeBeneficiaries = scheme.getBeneficiaries();
+        availableBeneficiaries = new ArrayList<>();
 
 
         appr_TIL = findViewById(R.id.appr_TIL);
         appr_ET = findViewById(R.id.appr_Et);
         savingsTV = findViewById(R.id.savingsTV);
         startDateTV = findViewById(R.id.startTV);
+        savingsTV.setText(Utils.formatMoney(scheme.getSavings()));
+        startDateTV.setText(Utils.getHumanDate(scheme.getStartDate()));
+        appr_ET.setText(Utils.formatMoney(scheme.getPercentage()));
         final ImageView addBeneficiaryBtn = findViewById(R.id.addBeneficiaryBtn);
         recyclerView = findViewById(R.id.beneficiariesRecyclerView);
         recyclerView.setHasFixedSize(false);
@@ -80,10 +96,16 @@ public class SingleSchemeActivity extends AppCompatActivity {
 
         ispssManager = new ISPSSManager(this);
         beneficiaries = new ArrayList<>();
+        refreshBeneficiary();
+
         addBeneficiaryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogFragment = new CheckBeneficiariesDialog(beneficiaries);
+                if(availableBeneficiaries.size() < 1){
+                    Toast.makeText(SingleSchemeActivity.this, "All your beneficiaries are already registered on this scheme", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                dialogFragment = new CheckBeneficiariesDialog(availableBeneficiaries,scheme.getId());
                 ispssManager.showDialog(dialogFragment,"checkBeneficiaries");
             }
         });
@@ -98,7 +120,7 @@ public class SingleSchemeActivity extends AppCompatActivity {
             }
         });
 
-        refreshBeneficiary();
+
 
     }
 
@@ -130,13 +152,26 @@ public class SingleSchemeActivity extends AppCompatActivity {
                                             Utils.getDateNoTime(data.getJSONObject(i).getString("dob")),
                                             data.getJSONObject(i).getString("phoneNumber"),
                                             data.getJSONObject(i).getString("relationshipId"),
-                                            data.getJSONObject(i).getDouble("percentage"),
+                                            0.00,
                                             data.getJSONObject(i).getString("gender"),schemes
                                             ));
                                     Beneficiaries[i] = beneficiaries.get(i);
                                     Log.d("ben Dob", data.getJSONObject(i).getString("dob"));
                                     setupScreen();
                                 }
+                                for(int i = 0; i < Beneficiaries.length; i++){
+                                    boolean found = false;
+                                    for(int j = 0;j< schemeBeneficiaries.length;j++){
+                                         if(Beneficiaries[i].getId().equals(schemeBeneficiaries[j].getId())){
+                                             found = true;
+                                             break;
+                                         }
+                                    }
+                                    if(!found){
+                                        availableBeneficiaries.add(Beneficiaries[i]);
+                                    }
+                                }
+
                                 ispssManager.cancelDialog(dialogFragment);
                                 return;
                             }
@@ -163,6 +198,7 @@ public class SingleSchemeActivity extends AppCompatActivity {
         startDateTV.setText(intent.getStringExtra(getString(R.string.start)));
         appr_ET.setText(Utils.formatMoney(intent.getDoubleExtra(getString(R.string.percentage),0.00)));
         recyclerView.setVisibility(View.VISIBLE);
+        ArrayList<Beneficiary> beneficiaries = new ArrayList<>(Arrays.asList(schemeBeneficiaries));
         recyclerView.setAdapter(new SchemeBeneficiaryAdapter(beneficiaries));
     }
 }

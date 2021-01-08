@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.Wave;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,7 +79,6 @@ public class SchemeActivity extends AppCompatActivity {
             emptyCL.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         } else {
-            Log.e("debug","here");
             recyclerView.setVisibility(View.VISIBLE);
             emptyCL.setVisibility(View.GONE);
             dialogFragment = new Loader();
@@ -98,10 +98,22 @@ public class SchemeActivity extends AppCompatActivity {
                                     for(int i = 0;i < jsonArray.length();i++){
                                         JSONObject data = jsonArray.getJSONObject(i);
                                        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-
+                                        JSONArray jsonArray1 = data.getJSONArray("beneficiaries");
+                                        Beneficiary[] beneficiaries = new Beneficiary[jsonArray1.length()];
+                                        for(int j = 0;j< jsonArray1.length();j++){
+                                            JSONObject beneficiaryObject = jsonArray1.getJSONObject(j);
+                                            beneficiaries[j] = new Beneficiary(beneficiaryObject.getString("id"),
+                                                    beneficiaryObject.getString("firstName"),
+                                                    beneficiaryObject.getString("lastName"),
+                                                    Utils.getDate(beneficiaryObject.getString("dob")),
+                                                    beneficiaryObject.getString("phoneNumber"),
+                                                    beneficiaryObject.getString("relationshipId"),
+                                                    Double.parseDouble(beneficiaryObject.getString("percentage")),
+                                                    beneficiaryObject.getString("gender"));
+                                        }
                                         Scheme scheme = new Scheme(data.getString("schemeId"),
                                                 data.getString("schemeName"),data.getDouble("appr"),
-                                                Utils.getDateNoTime(data.getString("createdAt")),data.getDouble("balance"));
+                                                Utils.getDateNoTime(data.getString("createdAt")),data.getDouble("balance"),beneficiaries);
                                         schemeArrayList.add(scheme);
                                         Log.d(ISPSS, "onResponse: "+scheme.getStartDate().toString());
                                     }
@@ -110,11 +122,8 @@ public class SchemeActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(int position) {
                                             Intent intent = new Intent(SchemeActivity.this,SingleSchemeActivity.class);
-                                            intent.putExtra(getString(R.string.id),schemeArrayList.get(position).getId());
-                                            intent.putExtra(getString(R.string.name),schemeArrayList.get(position).getName());
-                                            intent.putExtra(getString(R.string.savings),schemeArrayList.get(position).getSavings());
-                                            intent.putExtra(getString(R.string.start),Utils.getHumanDate(schemeArrayList.get(position).getStartDate()));
-                                            intent.putExtra(getString(R.string.percentage),schemeArrayList.get(position).getPercentage());
+                                            Gson gson = new Gson();
+                                            intent.putExtra(getString(R.string.scheme),gson.toJson(schemeArrayList.get(position)));
                                             startActivity(intent);
 //                                            dialogFragment = new EditSchemeDialog(schemeArrayList.get(position).getId(),
 //                                                    schemeArrayList.get(position).getName(),schemeArrayList.get(position).getPercentage());
@@ -147,15 +156,13 @@ public class SchemeActivity extends AppCompatActivity {
             emptyCL.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         } else {
-            Log.e("debug","here");
-
             recyclerView.setVisibility(View.VISIBLE);
             emptyCL.setVisibility(View.GONE);
             dialogFragment = new Loader();
             ispss_manager.showDialog(dialogFragment,"loader");
             RequestQueue queue = Volley.newRequestQueue(this);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                    DOMAIN + CONTRIBUTORS_SCHEMES + ispss_manager.getContributorID(),
+                    DOMAIN + CONTRIBUTORS_SCHEMES + ispss_manager.getContributorID()+"/Members",
                     null,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -167,17 +174,37 @@ public class SchemeActivity extends AppCompatActivity {
                                     JSONArray jsonArray = body.getJSONArray("schemes");
                                     for(int i = 0;i < jsonArray.length();i++){
                                         JSONObject data = jsonArray.getJSONObject(i);
+                                        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                        JSONArray jsonArray1 = data.getJSONArray("beneficiaries");
+                                        Beneficiary[] beneficiaries = new Beneficiary[jsonArray1.length()];
+                                        for(int j = 0;j< jsonArray1.length();j++){
+                                            JSONObject beneficiaryObject = jsonArray1.getJSONObject(j);
+                                            beneficiaries[j] = new Beneficiary(beneficiaryObject.getString("id"),
+                                                    beneficiaryObject.getString("firstName"),
+                                                    beneficiaryObject.getString("lastName"),
+                                                    Utils.getDate(beneficiaryObject.getString("dob")),
+                                                    beneficiaryObject.getString("phoneNumber"),
+                                                    beneficiaryObject.getString("relationshipId"),
+                                                    Double.parseDouble(beneficiaryObject.getString("percentage")),
+                                                    beneficiaryObject.getString("gender"));
+                                        }
                                         Scheme scheme = new Scheme(data.getString("schemeId"),
-                                                data.getString("schemeName"),data.getDouble("appr"),Utils.getDate(data.getString("createdAt")),data.getDouble("balance"));
+                                                data.getString("schemeName"),data.getDouble("appr"),
+                                                Utils.getDateNoTime(data.getString("createdAt")),data.getDouble("balance"),beneficiaries);
                                         schemeArrayList.add(scheme);
+                                        Log.d(ISPSS, "onResponse: "+scheme.getStartDate().toString());
                                     }
                                     SchemesAdapter schemesAdapter = new SchemesAdapter(schemeArrayList);
                                     schemeListener = new SchemesAdapter.Listener() {
                                         @Override
                                         public void onClick(int position) {
-                                            dialogFragment = new EditSchemeDialog(schemeArrayList.get(position).getId(),
-                                                    schemeArrayList.get(position).getName(),schemeArrayList.get(position).getPercentage());
-                                            ispss_manager.showDialog(dialogFragment,"editSchemeDialog");
+                                            Intent intent = new Intent(SchemeActivity.this,SingleSchemeActivity.class);
+                                            Gson gson = new Gson();
+                                            intent.putExtra(getString(R.string.scheme),gson.toJson(schemeArrayList.get(position)));
+                                            startActivity(intent);
+//                                            dialogFragment = new EditSchemeDialog(schemeArrayList.get(position).getId(),
+//                                                    schemeArrayList.get(position).getName(),schemeArrayList.get(position).getPercentage());
+//                                            ispss_manager.showDialog(dialogFragment,"editSchemeDialog");
                                         }
                                     };
                                     schemesAdapter.setListener(schemeListener);

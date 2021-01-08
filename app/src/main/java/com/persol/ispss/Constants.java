@@ -46,6 +46,8 @@ public class Constants {
     public static final String UPDATE_SCHEME_CONFIG = "SchemeAccounts/Update";
     public static final String DELETE_BENEFICIARY = "Beneficiaries/Remove/";
     public static final String GET_ALL_BENEFICIARIES_WITH_SCHEMES = "Beneficiaries/";
+    public static final String ADD_BENEFICIARIES_TO_SCHEME = "SchemeAccounts/AddToBeneficiary";
+    public static final String GET_MEMBER_GENERIC = "Members/GetMembersBySearchTerm?searchTerm=";
 
     public static final String NAME = "NAME";
     public static final String JOINED = "JOINED";

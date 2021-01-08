@@ -159,6 +159,15 @@
                     android:fontFamily="@font/roboto_bold"
                     android:textSize="18sp" />
 
+                <ImageView
+                    android:layout_marginEnd="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/saveBeneficiaryBtn"
+                    android:src="@drawable/save_green"
+                    app:layout_constraintEnd_toStartOf="@+id/addBeneficiaryBtn"
+                    app:layout_constraintTop_toTopOf="@+id/beneficiaryTV"
+                    app:layout_constraintBottom_toBottomOf="@+id/beneficiaryTV" />
 
                 <ImageView
                     android:layout_width="wrap_content"

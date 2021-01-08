@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,6 +62,13 @@ public class BeneficiariesAdapter extends RecyclerView.Adapter<BeneficiariesAdap
                     holder.listView.setVisibility(View.GONE);
                     beneficiaries.get(position).setExpanded(false);
                 } else {
+                    Scheme[] schemes = beneficiaries.get(position).getSchemes();
+                    String[] schemesNames = new String[schemes.length];
+                    for(int i = 0;i < schemes.length;i++){
+                        schemesNames[i] =ispssManager.getSchemeName(schemes[i].getId());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1,schemesNames);
+                    holder.listView.setAdapter(adapter);
                     holder.toggleIV.setImageResource(R.drawable.expanded);
                     holder.listView.setVisibility(View.VISIBLE);
                     holder.listView.setVisibility(View.VISIBLE);
