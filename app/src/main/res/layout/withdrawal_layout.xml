@@ -65,11 +65,8 @@
             android:id="@+id/withdrawBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/withdraw"
+            android:text="@string/request_withdrawal"
             app:layout_constraintTop_toBottomOf="@+id/description_TIL" />
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

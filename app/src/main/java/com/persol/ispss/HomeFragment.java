@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
                             intent = new Intent(getActivity(),JoinSchemeActivity.class);
                             startActivity(intent);
                         } else {
-                            showContributeWithdrawalDialog(WITHDRAW_PAGE);
+                            showContributeWithdrawalDialog(CONTRIBUTE_PAGE);
                         }
                         break;
                     case 3:

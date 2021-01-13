@@ -48,8 +48,8 @@ import static com.persol.ispss.Constants.UPDATE_BENEFICIARY;
 
 public class AddNewBeneficiaryDialog extends DialogFragment {
 
-    private TextInputLayout fNameTIL,lNameTIL,dobTIL,phoneTIL,percentageTIL;
-    private TextInputEditText fNameET,lNameET,dobET,phoneET,percentageET;
+    private TextInputLayout fNameTIL,lNameTIL,dobTIL,phoneTIL;
+    private TextInputEditText fNameET,lNameET,dobET,phoneET;
     private Spinner relationsSpinner;
     private MaterialButton saveBtn;
     private ArrayList<Beneficiary> beneficiaryArrayList;
@@ -78,12 +78,10 @@ public class AddNewBeneficiaryDialog extends DialogFragment {
         lNameTIL = view.findViewById(R.id.lnameTIL);
         dobTIL = view.findViewById(R.id.DOB_TIL);
         phoneTIL = view.findViewById(R.id.phone_TIL);
-        percentageTIL = view.findViewById(R.id.percentageTIL);
         fNameET = view.findViewById(R.id.fName_Et);
         lNameET = view.findViewById(R.id.lName_Et);
         dobET = view.findViewById(R.id.DOB_Et);
         phoneET = view.findViewById(R.id.phone_Et);
-        percentageET = view.findViewById(R.id.percentageEt);
         saveBtn = view.findViewById(R.id.saveBtn);
         relationsSpinner = view.findViewById(R.id.relationshipSpinner);
         genderGroup = view.findViewById(R.id.genderGroup);
@@ -91,7 +89,6 @@ public class AddNewBeneficiaryDialog extends DialogFragment {
         fNameET.addTextChangedListener(new MyTextWatcher(fNameTIL));
         lNameET.addTextChangedListener(new MyTextWatcher(lNameTIL));
         phoneET.addTextChangedListener(new MyTextWatcher(phoneTIL));
-        percentageET.addTextChangedListener(new MyTextWatcher(percentageTIL));
 
         ispssManager = new ISPSSManager(getActivity());
 
@@ -114,7 +111,6 @@ public class AddNewBeneficiaryDialog extends DialogFragment {
             lNameET.setText(Beneficiaries[position].getLastName());
             dobET.setText(Utils.getSlashedDate(Beneficiaries[position].getDob()));
             phoneET.setText(Beneficiaries[position].getPhone());
-            percentageET.setText(Utils.formatMoney(Beneficiaries[position].getPercentage()));
             genderGroup.check(Beneficiaries[position].getGender().toLowerCase().contains("f") ? R.id.femaleRadio : R.id.maleRadio);
             saveBtn.setText(getString(R.string.edit));
             relationsSpinner.setSelection(ispssManager.getRelationshipPosition(Beneficiaries[position].getRelationship()));
@@ -143,11 +139,6 @@ public class AddNewBeneficiaryDialog extends DialogFragment {
                     return;
                 }
 
-                if(percentageET.getText().toString().trim().isEmpty()){
-                    percentageTIL.setError(getString(R.string.empty_error));
-                    return;
-                }
-
                 try {
                         dialogFragment = new Loader();
                         JSONObject beneficiary = new JSONObject();
@@ -159,7 +150,7 @@ public class AddNewBeneficiaryDialog extends DialogFragment {
                         beneficiary.put("dob", Utils.getISODate(User.dobDate));
                         beneficiary.put("phoneNumber", phoneET.getText().toString().trim());
                         beneficiary.put("emailAddress", "");
-                        beneficiary.put("percentage", Double.parseDouble(percentageET.getText().toString().trim()));
+                        beneficiary.put("percentage", 0.00);
                         if(position != 1000000000){
                             beneficiary.put("id",Beneficiaries[position].getId());
                             beneficiary.put("memberId",ispssManager.getContributorID());

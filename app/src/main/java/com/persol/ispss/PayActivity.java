@@ -107,6 +107,8 @@ public class PayActivity extends AppCompatActivity {
 
         dialogFragment = new Loader();
 
+        showTips();
+
         favouriteArrayList = ispss_manager.getFavourites();
         favNames = new String[favouriteArrayList.size()];
         for(int i = 0; i < favouriteArrayList.size();i++){
@@ -156,6 +158,8 @@ public class PayActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
     }
 

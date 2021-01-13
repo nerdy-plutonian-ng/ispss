@@ -94,40 +94,25 @@
                 android:entries="@array/relations"
                 android:layout_marginEnd="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/percentageTIL"
+                app:layout_constraintEnd_toStartOf="@+id/genderGroup"
                 app:layout_constraintTop_toBottomOf="@+id/relationshipLabel" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginStart="5dp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/percentageTIL"
-                app:errorEnabled="true"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Percentage"
-                app:layout_constraintStart_toEndOf="@+id/relationshipSpinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phone_TIL">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/percentageEt"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/genderLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/percentageTIL"
+                app:layout_constraintStart_toStartOf="@+id/phone_TIL"
+                app:layout_constraintTop_toBottomOf="@+id/phone_TIL"
                 android:fontFamily="@font/roboto"
                 android:text="@string/gender" />
             <RadioGroup
+                android:layout_marginStart="5dp"
                 android:id="@+id/genderGroup"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/relationshipSpinner"
                 app:layout_constraintTop_toBottomOf="@+id/genderLabel"
-                android:layout_width="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <RadioButton

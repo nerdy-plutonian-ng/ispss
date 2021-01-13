@@ -1,6 +1,7 @@
 package com.persol.ispss;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,8 +41,10 @@ public class CheckBeneficiariesDialog extends DialogFragment {
     private ISPSSManager ispssManager;
     private DialogFragment dialogFragment;
     private String schemeID;
+    private Context context;
 
-    public CheckBeneficiariesDialog(ArrayList<Beneficiary> allBeneficiaries, String schemeID) {
+    public CheckBeneficiariesDialog(Context context,ArrayList<Beneficiary> allBeneficiaries, String schemeID) {
+        this.context = context;
         this.allBeneficiaries = allBeneficiaries;
         this.selectedBeneficiaries = new ArrayList<>();
         availableBeneficiaries = new String[this.allBeneficiaries.size()];
@@ -80,19 +83,22 @@ public class CheckBeneficiariesDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK, so save the selectedItems results somewhere
                         // or return them to the component that opened the dialog
-                        try{
-                            JSONArray jsonArray = new JSONArray();
-                            for(Beneficiary beneficiary : selectedBeneficiaries){
-                                JSONObject jsonObject = new JSONObject();
-                                jsonObject.put("beneficiaryId",beneficiary.getId());
-                                jsonObject.put("schemeId",schemeID);
-                                jsonObject.put("percentage",10.00);
-                                jsonArray.put(jsonObject);
-                            }
-                            registerBeneficiaries(jsonArray);
-                        } catch(Exception e) {
+                        Log.d(ISPSS, "onClick: "+selectedBeneficiaries.toString());
+                        ((SingleSchemeActivity)context).addToBens(selectedBeneficiaries);
 
-                        }
+//                        try{
+//                            JSONArray jsonArray = new JSONArray();
+//                            for(Beneficiary beneficiary : selectedBeneficiaries){
+//                                JSONObject jsonObject = new JSONObject();
+//                                jsonObject.put("beneficiaryId",beneficiary.getId());
+//                                jsonObject.put("schemeId",schemeID);
+//                                jsonObject.put("percentage",10.00);
+//                                jsonArray.put(jsonObject);
+//                            }
+//                            registerBeneficiaries(jsonArray);
+//                        } catch(Exception e) {
+//
+//                        }
 
                     }
                 })

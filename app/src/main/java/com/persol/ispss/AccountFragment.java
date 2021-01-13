@@ -53,15 +53,21 @@ public class AccountFragment extends Fragment {
         settingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent;
                 switch (i){
                     case 0:
                     case 1:
                     case 2:
                     case 3:
+                        break;
                     case 4:
+                        intent = new Intent(getActivity(),HistoryActivity.class);
+                        startActivity(intent);
+                        break;
                     case 5:
+                        break;
                     case 6:
-                        Intent intent = new Intent(getActivity(),BatchPayActivity.class);
+                        intent = new Intent(getActivity(),BatchPayActivity.class);
                         startActivity(intent);
                         break;
                     case 7:

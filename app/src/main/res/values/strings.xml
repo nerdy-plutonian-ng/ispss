@@ -82,6 +82,7 @@
     <string name="savings">savings</string>
     <string name="percentage">percentage</string>
     <string name="total_ghs">Total(GHS)</string>
+    <string name="request_withdrawal">Request Withdrawal</string>
 
     <string-array name="bank_account_types">
         <item>Savings Account</item>

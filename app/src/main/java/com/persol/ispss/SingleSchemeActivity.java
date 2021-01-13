@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -89,6 +90,7 @@ public class SingleSchemeActivity extends AppCompatActivity {
         startDateTV.setText(Utils.getHumanDate(scheme.getStartDate()));
         appr_ET.setText(Utils.formatMoney(scheme.getPercentage()));
         final ImageView addBeneficiaryBtn = findViewById(R.id.addBeneficiaryBtn);
+        final ImageView saveBeneficiaryBtn = findViewById(R.id.saveBeneficiaryBtn);
         recyclerView = findViewById(R.id.beneficiariesRecyclerView);
         recyclerView.setHasFixedSize(false);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -105,7 +107,7 @@ public class SingleSchemeActivity extends AppCompatActivity {
                     Toast.makeText(SingleSchemeActivity.this, "All your beneficiaries are already registered on this scheme", Toast.LENGTH_LONG).show();
                     return;
                 }
-                dialogFragment = new CheckBeneficiariesDialog(availableBeneficiaries,scheme.getId());
+                dialogFragment = new CheckBeneficiariesDialog(SingleSchemeActivity.this,availableBeneficiaries,scheme.getId());
                 ispssManager.showDialog(dialogFragment,"checkBeneficiaries");
             }
         });
@@ -113,6 +115,7 @@ public class SingleSchemeActivity extends AppCompatActivity {
         appr_TIL.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 appr_ET.setEnabled(!appr_ET.isEnabled());
                 if(appr_ET.isEnabled()){
                     appr_TIL.setEndIconDrawable(R.drawable.edit_primary);
@@ -120,8 +123,28 @@ public class SingleSchemeActivity extends AppCompatActivity {
             }
         });
 
+        saveBeneficiaryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(benNot100(beneficiaries)){
+                    Toast.makeText(SingleSchemeActivity.this, "All your beneficiaries' percentages must add up to 100%", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(SingleSchemeActivity.this, "Beneficiaries updated successfully", Toast.LENGTH_SHORT).show();
+                }
 
+            }
+        });
 
+    }
+
+    public boolean benNot100(final ArrayList<Beneficiary> beneficiaries){
+        double sum = 0;
+        for(Beneficiary beneficiary : beneficiaries){
+            sum += beneficiary.getPercentage();
+        }
+        Log.d(ISPSS, "benNot100: percentages = "+sum);
+        return sum < 100.00 || sum > 100.00;
     }
 
     public void refreshBeneficiary() {
@@ -198,7 +221,16 @@ public class SingleSchemeActivity extends AppCompatActivity {
         startDateTV.setText(intent.getStringExtra(getString(R.string.start)));
         appr_ET.setText(Utils.formatMoney(intent.getDoubleExtra(getString(R.string.percentage),0.00)));
         recyclerView.setVisibility(View.VISIBLE);
-        ArrayList<Beneficiary> beneficiaries = new ArrayList<>(Arrays.asList(schemeBeneficiaries));
-        recyclerView.setAdapter(new SchemeBeneficiaryAdapter(beneficiaries));
+        beneficiaries = new ArrayList<>(Arrays.asList(schemeBeneficiaries));
+        recyclerView.setAdapter(new SchemeBeneficiaryAdapter(beneficiaries,this));
+    }
+
+    public void setNewSchemeBens(ArrayList<Beneficiary> beneficiaries){
+        this.beneficiaries = beneficiaries;
+    }
+
+    public void addToBens(ArrayList<Beneficiary> newBeneficiaries){
+        beneficiaries.addAll(newBeneficiaries);
+        recyclerView.setAdapter(new SchemeBeneficiaryAdapter(beneficiaries,this));
     }
 }

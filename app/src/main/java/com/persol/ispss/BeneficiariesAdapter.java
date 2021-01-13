@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import static com.persol.ispss.Constants.ISPSS;
 import static com.persol.ispss.Constants.RelationshipsGlobal;
 
 public class BeneficiariesAdapter extends RecyclerView.Adapter<BeneficiariesAdapter.ViewHolder> {
@@ -63,6 +62,10 @@ public class BeneficiariesAdapter extends RecyclerView.Adapter<BeneficiariesAdap
                     beneficiaries.get(position).setExpanded(false);
                 } else {
                     Scheme[] schemes = beneficiaries.get(position).getSchemes();
+                    if(schemes.length < 1){
+                        Toast.makeText(context, "This beneficiary is not any of your schemes.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     String[] schemesNames = new String[schemes.length];
                     for(int i = 0;i < schemes.length;i++){
                         schemesNames[i] =ispssManager.getSchemeName(schemes[i].getId());
