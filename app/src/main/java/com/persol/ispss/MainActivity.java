@@ -12,6 +12,8 @@ import android.view.View;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import static com.persol.ispss.Constants.HOME_EXTRA;
+
 public class MainActivity extends AppCompatActivity {
 
     private ExtendedFloatingActionButton startButton;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
                             "loginRegister");
                 } else {
                     Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                    intent.putExtra(HOME_EXTRA,false);
                     startActivity(intent);
                 }
 

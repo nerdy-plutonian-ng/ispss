@@ -42,15 +42,21 @@ import java.util.ArrayList;
 
 import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 
+import static com.persol.ispss.Constants.APP_ID;
 import static com.persol.ispss.Constants.APP_ID_TEST;
+import static com.persol.ispss.Constants.APP_KEY;
 import static com.persol.ispss.Constants.APP_KEY_TEST;
 import static com.persol.ispss.Constants.DOMAIN;
 import static com.persol.ispss.Constants.EMERGENT_REDIRECT;
+import static com.persol.ispss.Constants.FavouritesGlobal;
 import static com.persol.ispss.Constants.GENERATE_PAYMENT_INVOICE;
 import static com.persol.ispss.Constants.GET_A_MEMBER;
 import static com.persol.ispss.Constants.GET_MEMBER_GENERIC;
 import static com.persol.ispss.Constants.GET_MEMBER_NO_FILTER;
 import static com.persol.ispss.Constants.ISPSS;
+import static com.persol.ispss.Constants.MEMBERID;
+import static com.persol.ispss.Constants.NAME;
+import static com.persol.ispss.Constants.PAY_URL_LIVE;
 import static com.persol.ispss.Constants.PAY_URL_TEST;
 
 public class PayActivity extends AppCompatActivity {
@@ -67,7 +73,6 @@ public class PayActivity extends AppCompatActivity {
     private TextInputEditText memberName_Et;
     private String[] favNames;
     private ArrayList<Favourite> favouriteArrayList;
-    private ImageView faveBtn;
     private CheckBox momoCheckbox;
     private TextInputLayout amount_TIL;
     private TextInputLayout description_TIL;
@@ -92,7 +97,6 @@ public class PayActivity extends AppCompatActivity {
 
         ExtendedFloatingActionButton saveBtn = findViewById(R.id.payBtn);
         favListBtn = findViewById(R.id.favoriteBook_IV);
-        faveBtn = findViewById(R.id.favorite_IV);
         memberName_TIL = findViewById(R.id.memberName_TIL);
         memberName_Et = findViewById(R.id.memberName_ET);
         momoCheckbox = findViewById(R.id.momoCheckbox);
@@ -109,11 +113,10 @@ public class PayActivity extends AppCompatActivity {
 
         showTips();
 
-        favouriteArrayList = ispss_manager.getFavourites();
-        favNames = new String[favouriteArrayList.size()];
-        for(int i = 0; i < favouriteArrayList.size();i++){
-            favNames[i] = favouriteArrayList.get(i).getName() + " - " + favouriteArrayList.get(i).getId();
-            Log.d(ISPSS, "fav: "+favouriteArrayList.get(i).getName());
+        favNames = new String[FavouritesGlobal.size()];
+        for(int i = 0; i < FavouritesGlobal.size();i++){
+            favNames[i] = FavouritesGlobal.get(i).getName() + " - " + FavouritesGlobal.get(i).getUserId();
+
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,favNames);
 
@@ -121,7 +124,7 @@ public class PayActivity extends AppCompatActivity {
         memberID_Et.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                memberID_Et.setText(favouriteArrayList.get(i).getId());
+                memberID_Et.setText(FavouritesGlobal.get(i).getUserId());
             }
         });
 
@@ -142,7 +145,6 @@ public class PayActivity extends AppCompatActivity {
                     getMemberName(memberID_Et.getText().toString());
                 } else {
                     memberName_Et.getText().clear();
-                    faveBtn.setImageResource(R.drawable.star_grey);
                 }
             }
         });
@@ -172,27 +174,6 @@ public class PayActivity extends AppCompatActivity {
                         "\nfavourites")
                 .gravity(Gravity.START)
                 .animated(true)
-                .onDismissListener(new SimpleTooltip.OnDismissListener() {
-                    @Override
-                    public void onDismiss(SimpleTooltip tooltip) {
-                        new SimpleTooltip.Builder(PayActivity.this)
-                                .backgroundColor(Color.GREEN)
-                                .arrowColor(Color.GREEN)
-                                .anchorView(faveBtn)
-                                .text("Add to" +
-                                        "\nfavourites")
-                                .gravity(Gravity.START)
-                                .animated(true)
-                                .onDismissListener(new SimpleTooltip.OnDismissListener() {
-                                    @Override
-                                    public void onDismiss(SimpleTooltip tooltip) {
-                                        ispss_manager.setFavFirstTime();
-                                    }
-                                })
-                                .build()
-                                .show();
-                    }
-                })
                 .build()
                 .show();
     }
@@ -217,7 +198,7 @@ public class PayActivity extends AppCompatActivity {
                             try {
                                 if(response.getInt("code") == 0){
                                     Log.e("invoiceResult", "onResponse: "+response.toString());
-                                    JSONObject data = dataArray.getJSONObject(1).put("Order_id",response.getJSONObject("body").getString("id"));
+                                    JSONObject data = dataArray.getJSONObject(1).put("Order_id",response.getJSONObject("body").getString("id").toLowerCase());
                                     goPayOnline(data);
                                 }
                             } catch (JSONException e) {
@@ -247,19 +228,21 @@ public class PayActivity extends AppCompatActivity {
     private void goPayOnline(JSONObject data){
         RequestQueue queue = Volley.newRequestQueue(PayActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                PAY_URL_TEST,
+                PAY_URL_LIVE,
                 data,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("test", response.toString() );
+                        Log.e("response", response.toString() );
                         ispss_manager.cancelDialog(dialogFragment);
                         try {
                             Intent intent1 = new Intent(PayActivity.this,WebViewPaymentActivity.class);
+                            intent1.putExtra(MEMBERID,searchedMemberId);
+                            intent1.putExtra(NAME,searchedMemberName);
                             intent1.putExtra("url",response.getString("redirect_url"));
                             startActivity(intent1);
-                        } catch (JSONException e) {
-                            Log.e("test", e.toString() );
+                        } catch (Exception e) {
+                            Log.e("ERROR", e.toString() );
                             e.printStackTrace();
                         }
 
@@ -270,7 +253,7 @@ public class PayActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         ispss_manager.cancelDialog(dialogFragment);
                         Toast.makeText(PayActivity.this, "Failed to initiate payment", Toast.LENGTH_SHORT).show();
-                        Log.e("test", error.toString() );
+                        Log.e("ERROR", error.toString() );
                     }
                 });
         queue.add(jsonObjectRequest);
@@ -301,14 +284,12 @@ public class PayActivity extends AppCompatActivity {
                                 searchedMemberId = "";
                                 searchedMemberName = "";
                                 faved = false;
-                                faveBtn.setImageResource(R.drawable.star_grey);
                             }
                         } catch (JSONException e) {
                             memberName_Et.getText().clear();
                             searchedMemberId = "";
                             searchedMemberName = "";
                             faved = false;
-                            faveBtn.setImageResource(R.drawable.star_grey);
                         }
 
                     }
@@ -320,7 +301,6 @@ public class PayActivity extends AppCompatActivity {
                         searchedMemberId = "";
                         searchedMemberName = "";
                         faved = false;
-                        faveBtn.setImageResource(R.drawable.star_grey);
                     }
                 });
         queue.add(jsonObjectRequest);
@@ -329,38 +309,36 @@ public class PayActivity extends AppCompatActivity {
     private void setFaveDefaults(){
         int result = ispss_manager.getFavouriteIndex(searchedMemberId);
         if(result == -1){
-            faveBtn.setImageResource(R.drawable.star_grey);
             faved = false;
         } else {
-            faveBtn.setImageResource(R.drawable.star);
             faved = true;
         }
     }
 
     public void makeFavourite(View view) {
-        if(memberName_Et.getText().toString().isEmpty() || memberName_Et.getText().toString().equals(getString(R.string.no_such_user)) || memberName_Et.getText().toString().equals(getString(R.string.enter_valid_user))){
-            Toast.makeText(this, "You must search a member first", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(faved){
-            if(ispss_manager.deleteFavourite(searchedMemberId)){
-                faveBtn.setImageResource(R.drawable.star_grey);
-                faved = false;
-                Toast.makeText(this, "Member is no longer a favourite", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Failed removing member from favourites", Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            if(ispss_manager.addToFavourites(new Favourite(searchedMemberId,searchedMemberName))){
-                faveBtn.setImageResource(R.drawable.star);
-                faved = true;
-                Toast.makeText(this, "You made this member a favourite", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Error adding member to favourites", Toast.LENGTH_SHORT).show();
-            }
-
-        }
+//        if(memberName_Et.getText().toString().isEmpty() || memberName_Et.getText().toString().equals(getString(R.string.no_such_user)) || memberName_Et.getText().toString().equals(getString(R.string.enter_valid_user))){
+//            Toast.makeText(this, "You must search a member first", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        if(faved){
+//            if(ispss_manager.deleteFavourite(searchedMemberId)){
+//                faveBtn.setImageResource(R.drawable.star_grey);
+//                faved = false;
+//                Toast.makeText(this, "Member is no longer a favourite", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(this, "Failed removing member from favourites", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        } else {
+//            if(ispss_manager.addToFavourites(new Favourite(searchedMemberId,searchedMemberName))){
+//                faveBtn.setImageResource(R.drawable.star);
+//                faved = true;
+//                Toast.makeText(this, "You made this member a favourite", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(this, "Error adding member to favourites", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
     }
 
     public void pay(View view) {
@@ -402,8 +380,8 @@ public class PayActivity extends AppCompatActivity {
             invoiceData.put("payerMemberID",ispss_manager.getContributorID());
 
             JSONObject data = new JSONObject();
-            data.put("app_id",APP_ID_TEST);
-            data.put("app_key",APP_KEY_TEST);
+            data.put("app_id",APP_ID);
+            data.put("app_key",APP_KEY );
             data.put("currency","GHS");
             data.put("Amount",Double.parseDouble(amount_Et.getText().toString().trim()));
             data.put("order_desc",description_Et.getText().toString().trim());

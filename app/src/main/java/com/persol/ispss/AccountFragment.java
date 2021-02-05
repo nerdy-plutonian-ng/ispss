@@ -65,6 +65,8 @@ public class AccountFragment extends Fragment {
                         startActivity(intent);
                         break;
                     case 5:
+                        intent = new Intent(getActivity(),FavouritesActivity.class);
+                        startActivity(intent);
                         break;
                     case 6:
                         intent = new Intent(getActivity(),BatchPayActivity.class);

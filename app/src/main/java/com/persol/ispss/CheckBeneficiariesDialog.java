@@ -36,22 +36,22 @@ import static com.persol.ispss.Constants.ISPSS;
 
 public class CheckBeneficiariesDialog extends DialogFragment {
 
-    private ArrayList<Beneficiary> allBeneficiaries,selectedBeneficiaries;
-    private String[] availableBeneficiaries;
+    private ArrayList<Beneficiary> availableBeneficiaries,selectedBeneficiaries;
+    private String[] availableBeneficiariesNames;
     private ISPSSManager ispssManager;
     private DialogFragment dialogFragment;
     private String schemeID;
     private Context context;
 
-    public CheckBeneficiariesDialog(Context context,ArrayList<Beneficiary> allBeneficiaries, String schemeID) {
+    public CheckBeneficiariesDialog(Context context,ArrayList<Beneficiary> availableBeneficiaries, String schemeID) {
         this.context = context;
-        this.allBeneficiaries = allBeneficiaries;
+        this.availableBeneficiaries = availableBeneficiaries;
         this.selectedBeneficiaries = new ArrayList<>();
-        availableBeneficiaries = new String[this.allBeneficiaries.size()];
+        availableBeneficiariesNames = new String[this.availableBeneficiaries.size()];
         int count = 0;
         this.schemeID = schemeID;
-        for(Beneficiary beneficiary : allBeneficiaries){
-            availableBeneficiaries[count] = beneficiary.getFirstName() + " " + beneficiary.getLastName();
+        for(Beneficiary beneficiary : availableBeneficiaries){
+            availableBeneficiariesNames[count] = beneficiary.getFirstName() + " " + beneficiary.getLastName();
             count++;
         }
     }
@@ -63,15 +63,15 @@ public class CheckBeneficiariesDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Set the dialog title
         builder.setTitle(R.string.select_beneficiaries)
-                .setMultiChoiceItems(availableBeneficiaries, null,
+                .setMultiChoiceItems(availableBeneficiariesNames, null,
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which,
                                                 boolean isChecked) {
                                 if (isChecked) {
                                     // If the user checked the item, add it to the selected items
-                                    selectedBeneficiaries.add(allBeneficiaries.get(which));
-                                } else if (selectedBeneficiaries.contains(selectedBeneficiaries.get(which))) {
+                                    selectedBeneficiaries.add(availableBeneficiaries.get(which));
+                                } else if (selectedBeneficiaries.contains(availableBeneficiaries.get(which))) {
                                     // Else, if the item is already in the array, remove it
                                     selectedBeneficiaries.remove(which);
                                 }

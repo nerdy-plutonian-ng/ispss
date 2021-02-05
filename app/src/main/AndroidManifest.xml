@@ -21,7 +21,8 @@
         <activity
             android:name=".PayActivity"
             android:parentActivityName=".HomeActivity" />
-        <activity android:name=".FavouritesActivity" />
+        <activity android:name=".FavouritesActivity"
+            android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".HistoryActivity"
             android:parentActivityName=".HomeActivity" />

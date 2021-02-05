@@ -39,6 +39,8 @@ import static com.persol.ispss.Constants.APP_KEY;
 import static com.persol.ispss.Constants.DOMAIN;
 import static com.persol.ispss.Constants.EMERGENT_REDIRECT;
 import static com.persol.ispss.Constants.GENERATE_CONTRIBUTION_INVOICE;
+import static com.persol.ispss.Constants.ISPSS;
+import static com.persol.ispss.Constants.PAY_URL_LIVE;
 import static com.persol.ispss.Constants.PAY_URL_TEST;
 
 public class ContributeDialog extends DialogFragment {
@@ -106,12 +108,15 @@ public class ContributeDialog extends DialogFragment {
                 dialogFragment = new Loader();
                 ispss_manager.showDialog(dialogFragment,"loader");
                 try{
+
                     JSONObject invoiceData = new JSONObject();
                     invoiceData.put("schemeId",schemes.get(schemesSpinner.getSelectedItemPosition()).getId());
                     invoiceData.put("memberID",ispss_manager.getContributorID());
                     invoiceData.put("description", "Contribution");
                     invoiceData.put("currency","GHS");
                     invoiceData.put("amount",Double.parseDouble(amount_Et.getText().toString().trim()));
+                    invoiceData.put("payerName",ispss_manager.getUserName());
+                    invoiceData.put("payerPhone",ispss_manager.getUserPhone());
 
                     JSONObject data = new JSONObject();
                     data.put("app_id",APP_ID);
@@ -125,13 +130,12 @@ public class ContributeDialog extends DialogFragment {
                     JSONArray dataArray = new JSONArray();
                     dataArray.put(invoiceData);
                     dataArray.put(data);
-
+                    Log.d(ISPSS, "onClick: data bundled");
                     generateInvoice(dataArray);
 
                 } catch (Exception e){
                     ispss_manager.cancelDialog(dialogFragment);
-                    Toast.makeText(getActivity(), "Failed to initiate payment", Toast.LENGTH_SHORT).show();
-                    Log.e("test", e.toString() );
+                    Log.d(ISPSS, "onClick: "+e.toString());
                 }
 
             }
@@ -174,35 +178,36 @@ public class ContributeDialog extends DialogFragment {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.e("error",error.toString());
+                            Log.d(ISPSS, "onErrorResponse: "+error.toString());
                             ispss_manager.cancelDialog(dialogFragment);
                             Toast.makeText(getActivity(), "Failed to initiate payment", Toast.LENGTH_SHORT).show();
                         }
                     });
             queue.add(jsonObjectRequest);
         } catch (Exception e){
-            Log.e("error",e.toString());
+            Log.d(ISPSS, "generateInvoice: "+e.toString());
             ispss_manager.cancelDialog(dialogFragment);
             Toast.makeText(getActivity(), "Failed to initiate payment", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void goPayOnline(JSONObject data){
+        Log.d(ISPSS, "goPayOnline: going to emergent");
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                PAY_URL_TEST,
+                PAY_URL_LIVE,
                 data,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("test", response.toString() );
+                        Log.d(ISPSS, "onResponse: emergent ok response");
                         ispss_manager.cancelDialog(dialogFragment);
                         try {
                             Intent intent1 = new Intent(getActivity(),WebViewPaymentActivity.class);
                             intent1.putExtra("url",response.getString("redirect_url"));
                             startActivity(intent1);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } catch (Exception e) {
+                            Log.d(ISPSS, "onResponse: "+e.toString());
                         }
 
                     }
@@ -212,7 +217,7 @@ public class ContributeDialog extends DialogFragment {
                     public void onErrorResponse(VolleyError error) {
                         ispss_manager.cancelDialog(dialogFragment);
                         Toast.makeText(getActivity(), "Failed to initiate payment", Toast.LENGTH_SHORT).show();
-                        Log.e("test", error.toString() );
+                        Log.d(ISPSS, "onErrorResponse: "+error.toString());
                     }
                 });
         queue.add(jsonObjectRequest);

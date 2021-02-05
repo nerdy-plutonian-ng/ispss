@@ -3,10 +3,12 @@ package com.persol.ispss;
 public class Favourite {
 
     private String id;
+    private String userId;
     private String name;
 
-    public Favourite(String id, String name) {
+    public Favourite(String id, String userId, String name) {
         this.id = id;
+        this.userId = userId;
         this.name = name;
     }
 
@@ -24,6 +26,14 @@ public class Favourite {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Override

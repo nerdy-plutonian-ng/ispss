@@ -69,6 +69,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ListView
+            android:background="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/label"

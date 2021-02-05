@@ -32,7 +32,7 @@ import static com.persol.ispss.Constants.RelationshipsGlobal;
 public class AddBeneficiaryDialog extends DialogFragment {
 
     private TextInputLayout fNameTIL,lNameTIL,dobTIL,phoneTIL,percentageTIL;
-    private TextInputEditText fNameET,lNameET,dobET,phoneET,percentageET;
+    private TextInputEditText fNameET,lNameET,dobET,phoneET;
     private Spinner relationsSpinner;
     private MaterialButton saveBtn;
     private ListView listView;
@@ -64,7 +64,6 @@ public class AddBeneficiaryDialog extends DialogFragment {
         lNameET = view.findViewById(R.id.lName_Et);
         dobET = view.findViewById(R.id.DOB_Et);
         phoneET = view.findViewById(R.id.phone_Et);
-        percentageET = view.findViewById(R.id.percentageEt);
         saveBtn = view.findViewById(R.id.saveBtn);
         relationsSpinner = view.findViewById(R.id.relationshipSpinner);
         genderGroup = view.findViewById(R.id.genderGroup);
@@ -74,7 +73,6 @@ public class AddBeneficiaryDialog extends DialogFragment {
         fNameET.addTextChangedListener(new MyTextWatcher(fNameTIL));
         lNameET.addTextChangedListener(new MyTextWatcher(lNameTIL));
         phoneET.addTextChangedListener(new MyTextWatcher(phoneTIL));
-        percentageET.addTextChangedListener(new MyTextWatcher(percentageTIL));
 
         dobET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -114,14 +112,11 @@ public class AddBeneficiaryDialog extends DialogFragment {
                     return;
                 }
 
-                if(percentageET.getText().toString().trim().isEmpty()){
-                    percentageTIL.setError(getString(R.string.empty_error));
-                    return;
-                }
+
 
                 Beneficiary beneficiary = new Beneficiary(fNameET.getText().toString().trim(),
                         lNameET.getText().toString().trim(),User.dobDate,phoneET.getText().toString().trim(),
-                        RelationshipsGlobal.get(relationsSpinner.getSelectedItemPosition()).getId(),Double.parseDouble(percentageET.getText().toString().trim()),
+                        RelationshipsGlobal.get(relationsSpinner.getSelectedItemPosition()).getId(),100,
                         genderGroup.getCheckedRadioButtonId() == R.id.maleRadio ? "Male" : "Female");
                 beneficiaryArrayList.add(beneficiary);
                 AddBeneficiaryDialog.this.getDialog().cancel();
@@ -151,12 +146,5 @@ public class AddBeneficiaryDialog extends DialogFragment {
             listView.setVisibility(View.VISIBLE);
         }
 
-    }
-
-    private void gett(int x){
-        if (x > 1){
-            System.out.println("f");
-            return;
-        }
     }
 }

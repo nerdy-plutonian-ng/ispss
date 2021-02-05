@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,13 +48,31 @@ public class SchemeBeneficiaryAdapter extends RecyclerView.Adapter<SchemeBenefic
         holder.percentageTIL.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.percentageET.setEnabled(!holder.percentageET.isEnabled());
                 if(holder.percentageET.isEnabled()){
-                    holder.percentageTIL.setEndIconDrawable(R.drawable.edit_primary);
-                } else {
+                    if(Double.parseDouble(holder.percentageET.getText().toString().trim()) <= 0){
+                        Toast.makeText(context, "Percentage can not be 0% or less", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(Double.parseDouble(holder.percentageET.getText().toString().trim()) > 100){
+                        Toast.makeText(context, "Percentage can not be more than 100%", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    holder.percentageET.setEnabled(false);
                     beneficiaries.get(position).setPercentage(Double.parseDouble(holder.percentageET.getText().toString().trim()));
+                    for (Beneficiary ben: beneficiaries) {
+                        Log.d(ISPSS, "percentage = "+ben.getPercentage());
+                    }
                     ((SingleSchemeActivity)context).setNewSchemeBens(beneficiaries);
+                } else {
+                    holder.percentageTIL.setEndIconDrawable(R.drawable.edit_primary);
+                    holder.percentageET.setEnabled(true);
                 }
+            }
+        });
+        holder.deleteTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((SingleSchemeActivity)context).removeBeneficiary(position);
             }
         });
     }

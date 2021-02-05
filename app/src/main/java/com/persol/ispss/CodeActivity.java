@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.persol.ispss.Constants.DOMAIN;
+import static com.persol.ispss.Constants.HOME_EXTRA;
 import static com.persol.ispss.Constants.ISPSS;
 import static com.persol.ispss.Constants.LOGIN_CODE;
 
@@ -119,6 +120,7 @@ public class CodeActivity extends AppCompatActivity {
                                     editor.putString(getString(R.string.bank),bank != null ?  bank.toString() : "");
                                     editor.apply();
                                     Intent intent = new Intent(CodeActivity.this,HomeActivity.class);
+                                    intent.putExtra(HOME_EXTRA,false);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 }

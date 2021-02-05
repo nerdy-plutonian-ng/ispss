@@ -44,7 +44,7 @@ public class AdditionalInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(isReady()){
-                    Fragment fragment = new SavingsConfigFragment();
+                    Fragment fragment = new IDCardFragment();
                     FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentHost, fragment);
                     fragmentTransaction.addToBackStack(null);

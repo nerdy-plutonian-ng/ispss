@@ -19,14 +19,15 @@ public class Constants {
     public static final String ADD_CRITICAL_INFO = "SchemeAccounts/Create";
     public static final String BECOME_A_MEMBER = "Registrations/BecomeMember";
     public static final String CONTRIBUTORS_SCHEMES = "SchemeAccounts/";
-    public static final String APP_ID = "7453014357";
-    public static final String APP_KEY = "57217937";
     public static final String APP_ID_TEST = "2452016059";
     public static final String APP_KEY_TEST = "70964183";
+    public static final String APP_ID = "7453014357";
+    public static final String APP_KEY = "57217937";
     public static final String PAY_URL_LIVE = "https://interpayafrica.com/interapi/ProcessPayment";
     public static final String CONTRIBUTE_INVOICE = "Contributions/Create";
-    public static final String EMERGENT_REDIRECT = "https://collect.localrevenue-gh.com/ispssfundmanager/Transaction/Payment";
+    public static final String EMERGENT_REDIRECT = "https://collect.localrevenue-gh.com/ispssfundmanager/Transaction/Pay";
     public static final String GENERATE_PAYMENT_INVOICE = "Payments/Create";
+    public static final String PAYMENT_INVOICE_UPDATE = "Payments/Update";
     public static final String GENERATE_CONTRIBUTION_INVOICE = "Contributions/Create";
     public static final String GET_A_MEMBER = "Members/GetByMemberID?memberID=";
     public static final String GET_MEMBER_NO_FILTER = "Members/GetMembersBySearchTerm?searchTerm=";
@@ -48,16 +49,24 @@ public class Constants {
     public static final String GET_ALL_BENEFICIARIES_WITH_SCHEMES = "Beneficiaries/";
     public static final String ADD_BENEFICIARIES_TO_SCHEME = "SchemeAccounts/AddToBeneficiary";
     public static final String GET_MEMBER_GENERIC = "Members/GetMembersBySearchTerm?searchTerm=";
+    public static final String GET_ID_TYPES = "Generics/GetGenericsByType/IDT";
+    public static final String UPDATE_SCHEME_BENEFICIARIES = "SchemeAccounts/AddToBeneficiary";
+    public static final String GET_FAVOURITES = "Favourites/";
+    public static final String ADD_TO_FAVOURITES = "Favourites/Add";
+    public static final String ISPSS_HOST = "collect.localrevenue-gh.com";
 
     public static final String NAME = "NAME";
     public static final String JOINED = "JOINED";
+    public static final String MEMBERID =  "MEMBERID";
 
     public static final String USER_TABLE = "USERTABLE";
     public static  ArrayList<Relationship> RelationshipsGlobal = new ArrayList<>();
     public static  ArrayList<NetworkProvider> NetworkProvidersGlobal = new ArrayList<>();
     public static  ArrayList<Scheme> SchemesGlobal = new ArrayList<>();
     public static  ArrayList<BankAccountType> BankAccountTypesGlobal = new ArrayList<>();
+    public static ArrayList<Favourite> FavouritesGlobal = new ArrayList<>();
     public static Beneficiary[] Beneficiaries;
+    public static ArrayList<IDType> IDCardTypesGlobal = new ArrayList<>();
     public static final String ISPSS = "ISPSS";
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static final String DATE_NO_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
@@ -99,6 +108,7 @@ public class Constants {
     public static final int USER_CODE_VALUE = 111666;
     public static final int USER_BANK_VALUE = 111667;
     public static final int USER_MOMO_VALUE = 111668;
+    public static final String HOME_EXTRA = "HOME_EXTRA";
 
     public static final String PKID = "PKID";
 

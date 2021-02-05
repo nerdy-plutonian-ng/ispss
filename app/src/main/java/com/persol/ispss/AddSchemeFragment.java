@@ -159,6 +159,12 @@ public class AddSchemeFragment extends Fragment {
             data.put("bank",bank);
             data.put("momo",momo);
             data.put("fundSetup",scheme);
+            JSONObject idCard = new JSONObject();
+            idCard.put("idTypeId",newMember.getNationalId().getIdType());
+            idCard.put("idNumber",newMember.getNationalId().getIdNumber());
+            idCard.put("nameOnCard",newMember.getNationalId().getNameOnCard());
+            idCard.put("expiresOn",Utils.getISODate(newMember.getNationalId().getExpiryDate()));
+            data.put("idCard",idCard);
             Log.e("criti",data.toString());
             RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,

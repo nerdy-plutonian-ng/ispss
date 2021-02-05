@@ -124,29 +124,29 @@ public class PayDialog extends DialogFragment {
         contributorID_TIL.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(payeeNameTV.getText().toString().isEmpty() || payeeNameTV.getText().toString().equals(getString(R.string.no_such_user)) || payeeNameTV.getText().toString().equals(getString(R.string.enter_valid_user))){
-                    Toast.makeText(getActivity(), "You must search a member first", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(faved){
-                    if(ispss_manager.deleteFavourite(searchedMemberId)){
-                        contributorID_TIL.setEndIconDrawable(R.drawable.star_border);
-                        faved = false;
-                        Toast.makeText(getActivity(), "Member is no longer a favourite", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), "Failed removing member from favourites", Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-                    if(ispss_manager.addToFavourites(new Favourite(searchedMemberId,searchedMemberName))){
-                        contributorID_TIL.setEndIconDrawable(R.drawable.star);
-                        faved = true;
-                        Toast.makeText(getActivity(), "You made this member a favourite", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), "Error adding member to favourites", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
+//                if(payeeNameTV.getText().toString().isEmpty() || payeeNameTV.getText().toString().equals(getString(R.string.no_such_user)) || payeeNameTV.getText().toString().equals(getString(R.string.enter_valid_user))){
+//                    Toast.makeText(getActivity(), "You must search a member first", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if(faved){
+//                    if(ispss_manager.deleteFavourite(searchedMemberId)){
+//                        contributorID_TIL.setEndIconDrawable(R.drawable.star_border);
+//                        faved = false;
+//                        Toast.makeText(getActivity(), "Member is no longer a favourite", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getActivity(), "Failed removing member from favourites", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                } else {
+//                    if(ispss_manager.addToFavourites(new Favourite(searchedMemberId,searchedMemberName))){
+//                        contributorID_TIL.setEndIconDrawable(R.drawable.star);
+//                        faved = true;
+//                        Toast.makeText(getActivity(), "You made this member a favourite", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getActivity(), "Error adding member to favourites", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                }
             }
         });
 

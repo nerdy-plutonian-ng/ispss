@@ -9,19 +9,26 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.UUID;
+
+import static com.persol.ispss.Constants.IDCardTypesGlobal;
+
 
 public class PersonalInfoFragment extends Fragment {
 
     private ISPSSManager ispssManager;
-    private TextInputLayout fNAmeTIL,mNAmeTIL,lNAmeTIL,dobTIL,phoneTIL,emailTIL,residenceTIL,hometownTIL,occupationTIL;
-    private TextInputEditText fNAmeEt,mNAmeEt,lNAmeEt,dobEt,phoneEt,emailEt,residenceET,hometownET,occupationET;
+    private TextInputLayout fNAmeTIL,mNAmeTIL,lNAmeTIL,dobTIL,phoneTIL,emailTIL,residenceTIL,hometownTIL,occupationTIL,idTIL;
+    private TextInputEditText fNAmeEt,mNAmeEt,lNAmeEt,dobEt,phoneEt,emailEt,residenceET,hometownET,occupationET,idEt;
     private RadioGroup genderGroup;
+
 
 
     public PersonalInfoFragment() {
@@ -33,8 +40,9 @@ public class PersonalInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_personal_info, container, false);
-        ExtendedFloatingActionButton nextBtn = view.findViewById(R.id.nextButton);
 
+        ispssManager = new ISPSSManager(getActivity());
+        ExtendedFloatingActionButton nextBtn = view.findViewById(R.id.nextButton);
         fNAmeTIL = view.findViewById(R.id.fName_TIL);
         mNAmeTIL = view.findViewById(R.id.mName_TIL);
         lNAmeTIL = view.findViewById(R.id.lName_TIL);
@@ -44,6 +52,7 @@ public class PersonalInfoFragment extends Fragment {
         residenceTIL = view.findViewById(R.id.residence_TIL);
         hometownTIL = view.findViewById(R.id.hometown_TIL);
         occupationTIL = view.findViewById(R.id.occupation_TIL);
+        idTIL = view.findViewById(R.id.nationalId_TIL);
         fNAmeEt = view.findViewById(R.id.fName_Et);
         mNAmeEt = view.findViewById(R.id.mName_Et);
         lNAmeEt = view.findViewById(R.id.lName_Et);
@@ -60,21 +69,21 @@ public class PersonalInfoFragment extends Fragment {
         dobEt.addTextChangedListener(new MyTextWatcher(dobTIL));
         phoneEt.addTextChangedListener(new MyTextWatcher(phoneTIL));
         emailEt.addTextChangedListener(new MyTextWatcher(emailTIL));
-        dobEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        dobTIL.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View view, boolean b) {
-                if(b){
-                    MyDatePicker myDatePicker = new MyDatePicker(getActivity(),dobEt);
-                    myDatePicker.showDialog();
-                }
+            public void onClick(View view) {
+                MyDatePicker myDatePicker = new MyDatePicker(getActivity(),dobEt,dobTIL);
+                myDatePicker.showDialog();
             }
         });
+
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isReady()){
-                    Fragment fragment = new SavingsConfigFragment();
+                    Fragment fragment = new IDCardFragment();
                     FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentHost, fragment);
                     fragmentTransaction.addToBackStack(null);
@@ -102,7 +111,7 @@ public class PersonalInfoFragment extends Fragment {
         }
 
         if(dobEt.getText().toString().trim().isEmpty()){
-            dobTIL.setError(getString(R.string.empty_error));
+            dobTIL.setError(getString(R.string.invalid_date_error));
             return false;
         }
 

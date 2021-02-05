@@ -111,6 +111,8 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@drawable/calendar"
                         android:layout_marginEnd="5dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -122,8 +124,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/phone_TIL"
                         android:id="@+id/dateOfBirth_TIL">
                         <com.google.android.material.textfield.TextInputEditText
-                            android:drawableEnd="@drawable/calendar"
-                            android:text="dd / mm / yy"
+                            android:enabled="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/dateOfBirth_ET"
@@ -152,12 +153,13 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
 
+
                     <TextView
                         android:id="@+id/genderLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/dateOfBirth_TIL"
+                        app:layout_constraintTop_toBottomOf="@+id/phone_TIL"
                         android:fontFamily="@font/roboto"
                         android:text="@string/gender" />
                     <RadioGroup

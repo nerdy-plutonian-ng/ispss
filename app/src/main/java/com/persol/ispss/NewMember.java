@@ -22,6 +22,7 @@ public class NewMember {
     private static double appr;
     private static Scheme scheme;
     private static boolean memberExisting;
+    private static IDCard nationalId;
 
     public NewMember() {
     }
@@ -168,5 +169,13 @@ public class NewMember {
 
     public  void setMemberExisting(boolean memberExisting) {
         NewMember.memberExisting = memberExisting;
+    }
+
+    public IDCard getNationalId() {
+        return nationalId;
+    }
+
+    public void setNationalId(IDCard nationalId) {
+        NewMember.nationalId = nationalId;
     }
 }

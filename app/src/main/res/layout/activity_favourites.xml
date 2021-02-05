@@ -29,23 +29,12 @@
             app:layout_constraintTop_toBottomOf="@+id/favouritesAppBar"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/transactionsLabel"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text=""
-                android:textColor="@color/colorWhite"
-                android:fontFamily="@font/roboto"
-                android:textSize="20sp" />
-
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="20dp"
-                android:id="@+id/favouritesListview"
+                android:id="@+id/favouritesRecyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/transactionsLabel" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

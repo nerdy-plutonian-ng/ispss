@@ -7,12 +7,20 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
+import static com.persol.ispss.Constants.HOME_EXTRA;
+import static com.persol.ispss.Constants.MEMBERID;
+import static com.persol.ispss.Constants.NAME;
+
 public class WebViewPaymentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view_payment);
+
+        Intent intent = getIntent();
+        String memberId = intent.getStringExtra(MEMBERID);
+        String name = intent.getStringExtra(NAME);
 
         WebView myWebView = findViewById(R.id.webview);
         myWebView.getSettings().setJavaScriptEnabled(true);
@@ -22,7 +30,7 @@ public class WebViewPaymentActivity extends AppCompatActivity {
 
         ProgressBar progressBar = new ProgressBar(this);
 
-        myWebView.setWebViewClient(new WebviewClient(progressBar));
+        myWebView.setWebViewClient(new WebviewClient(this,memberId,name));
     }
 
 //    @Override

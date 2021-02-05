@@ -78,11 +78,16 @@
     <string name="id">_id</string>
     <string name="scheme">scheme</string>
     <string name="add_a_payee">Add a payee</string>
-    <string name="select_beneficiaries">Select Beneficiaries</string>
+    <string name="select_beneficiaries">Select Beneficiary(s)</string>
     <string name="savings">savings</string>
     <string name="percentage">percentage</string>
     <string name="total_ghs">Total(GHS)</string>
     <string name="request_withdrawal">Request Withdrawal</string>
+    <string name="nationalIdType">National ID Type</string>
+    <string name="id_number">ID Number</string>
+    <string name="add_an_id_card">Add an ID card</string>
+    <string name="name_on_card">Name on Card</string>
+    <string name="expiry_date">Expiry date</string>
 
     <string-array name="bank_account_types">
         <item>Savings Account</item>
@@ -104,5 +109,10 @@
         <item>Axis Pensions</item>
         <item>Enterprise Pensions</item>
         <item>Metropolitan Pensions</item>
+    </string-array>
+    <string-array name="nationalids">
+        <item>Voters\' ID</item>
+        <item>Passport</item>
+        <item>Ghana Card</item>
     </string-array>
 </resources>

@@ -16,6 +16,7 @@ public class Beneficiary {
     private String gender;
     private boolean expanded;
     private Scheme[] schemes;
+    private boolean deleted;
 
     public Beneficiary(String id, String firstName, String lastName, Date dob, String phone, String relationship, double percentage, String gender) {
         this.id = id;
@@ -28,6 +29,7 @@ public class Beneficiary {
         this.gender = gender;
         this.expanded = false;
         this.schemes = new Scheme[0];
+        this.deleted = false;
     }
 
     public Beneficiary(String id, String firstName, String lastName, double percentage) {
@@ -41,6 +43,7 @@ public class Beneficiary {
         this.gender = "Male";
         this.expanded = false;
         this.schemes = new Scheme[0];
+        this.deleted = false;
     }
 
     public Beneficiary(String firstName, String lastName, Date dob, String phone, String relationship, double percentage, String gender) {
@@ -54,6 +57,7 @@ public class Beneficiary {
         this.gender = gender;
         this.expanded = false;
         this.schemes = new Scheme[0];
+        this.deleted = false;
     }
 
     public Beneficiary(String id, String firstName, String lastName, Date dob, String phone, String relationship, double percentage, String gender, Scheme[] schemes) {
@@ -67,6 +71,7 @@ public class Beneficiary {
         this.gender = gender;
         this.schemes = schemes;
         this.expanded = false;
+        this.deleted = false;
     }
 
 
@@ -148,5 +153,13 @@ public class Beneficiary {
 
     public void setSchemes(Scheme[] schemes) {
         this.schemes = schemes;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

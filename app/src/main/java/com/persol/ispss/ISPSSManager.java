@@ -27,10 +27,16 @@ import java.util.Date;
 import static com.persol.ispss.Constants.BankAccountTypesGlobal;
 import static com.persol.ispss.Constants.Beneficiaries;
 import static com.persol.ispss.Constants.DOMAIN;
+import static com.persol.ispss.Constants.FavouritesGlobal;
+import static com.persol.ispss.Constants.GET_ALL_BENEFICIARIES_WITH_SCHEMES;
 import static com.persol.ispss.Constants.GET_ALL_RELATIONSHIPS;
 import static com.persol.ispss.Constants.GET_ALL_SCHEMES;
 import static com.persol.ispss.Constants.GET_BANK_ACCOUNT_TYPES;
+import static com.persol.ispss.Constants.GET_BENEFICIARIES;
+import static com.persol.ispss.Constants.GET_FAVOURITES;
+import static com.persol.ispss.Constants.GET_ID_TYPES;
 import static com.persol.ispss.Constants.GET_NETWORK_PROVIDERS;
+import static com.persol.ispss.Constants.IDCardTypesGlobal;
 import static com.persol.ispss.Constants.ISPSS;
 import static com.persol.ispss.Constants.NetworkProvidersGlobal;
 import static com.persol.ispss.Constants.REMOVE_BENEFICIARY;
@@ -213,20 +219,20 @@ public class ISPSSManager {
     }
 
     public ArrayList<Favourite> getFavourites(){
-
-        try {
-            JSONArray jsonArray = new JSONArray(sharedPref.getString(context.getString(R.string.favourites),""));
-            ArrayList<Favourite> favourites = new ArrayList<>();
-            for(int i = 0; i < jsonArray.length();i++){
-                Favourite favourite = new Favourite(jsonArray.getJSONObject(i).getString("id"),
-                        jsonArray.getJSONObject(i).getString("name"));
-                favourites.add(favourite);
-                Log.d(ISPSS, "getFavourites: " + favourite.toString());
-            }
-            return favourites;
-        } catch (JSONException e) {
-            return new ArrayList<>();
-        }
+        return new ArrayList<>();
+//        try {
+//            JSONArray jsonArray = new JSONArray(sharedPref.getString(context.getString(R.string.favourites),""));
+//            ArrayList<Favourite> favourites = new ArrayList<>();
+//            for(int i = 0; i < jsonArray.length();i++){
+//                Favourite favourite = new Favourite(jsonArray.getJSONObject(i).getString("id"),
+//                        jsonArray.getJSONObject(i).getString("name"));
+//                favourites.add(favourite);
+//                Log.d(ISPSS, "getFavourites: " + favourite.toString());
+//            }
+//            return favourites;
+//        } catch (JSONException e) {
+//            return new ArrayList<>();
+//        }
     }
 
     public boolean deleteFavourite(String id){
@@ -325,6 +331,16 @@ public class ISPSSManager {
         int count = 0;
         for(Relationship relationship : relationshipArrayList){
             names[count] = relationship.getName();
+            count++;
+        }
+        return names;
+    }
+
+    public String[] getIdTypesNames(ArrayList<IDType> idTypeArrayList){
+        String[] names = new String[idTypeArrayList.size()];
+        int count = 0;
+        for(IDType idType : idTypeArrayList){
+            names[count] = idType.getName();
             count++;
         }
         return names;
@@ -521,7 +537,7 @@ public class ISPSSManager {
                                 }
                                 NetworkProvidersGlobal = networkProviderArrayList;
                                 Log.e("debug","networks : "+NetworkProvidersGlobal.size());
-                                cancelDialog(dialogFragment);
+                                getIDTypes(dialogFragment);
                             }
 
                         } catch (JSONException e) {
@@ -536,6 +552,137 @@ public class ISPSSManager {
                         cancelDialog(dialogFragment);
                     }
                 });
+        queue.add(jsonObjectRequest);
+    }
+
+    public void getIDTypes(final DialogFragment dialogFragment){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                DOMAIN + GET_ID_TYPES,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            ArrayList<IDType> idTypeArrayList = new ArrayList<>();
+                            if(response.getInt("code") == 0){
+                                JSONArray body = response.getJSONArray("body");
+                                for(int i = 0;i < body.length();i++){
+                                    JSONObject data = body.getJSONObject(i);
+                                    IDType idType = new IDType(data.getString("id"),
+                                            data.getString("description"));
+                                    idTypeArrayList.add(idType);
+                                }
+                                IDCardTypesGlobal = idTypeArrayList;
+                                Log.e("debug","idtypes : "+IDCardTypesGlobal.size());
+                                getBeneficiaries(dialogFragment);
+                            }
+
+                        } catch (JSONException e) {
+                            cancelDialog(dialogFragment);
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        cancelDialog(dialogFragment);
+                    }
+                });
+        queue.add(jsonObjectRequest);
+    }
+
+    public void getBeneficiaries(final DialogFragment dialogFragment){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                DOMAIN + GET_ALL_BENEFICIARIES_WITH_SCHEMES + getContributorID() + "/Schemes",
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if(response.getInt("code") == 0) {
+                                JSONArray data = response.getJSONArray("body");
+                                ArrayList<Beneficiary> beneficiaries = new ArrayList<>();
+                                Beneficiaries = new Beneficiary[data.length()];
+                                for(int i = 0; i < data.length();i++) {
+                                    JSONArray schemesArray = data.getJSONObject(i).getJSONArray("schemes");
+                                    Scheme[] schemes = new Scheme[schemesArray.length()];
+                                    for(int j = 0; j < schemesArray.length();j++){
+                                        schemes[j] = new Scheme(schemesArray.getJSONObject(j).getString("schemeId"),
+                                                schemesArray.getJSONObject(j).getDouble("percentage"));
+                                    }
+                                    beneficiaries.add(new Beneficiary(data.getJSONObject(i).getString("id"),
+                                            data.getJSONObject(i).getString("firstName"),
+                                            data.getJSONObject(i).getString("lastName"),
+                                            Utils.getDateNoTime(data.getJSONObject(i).getString("dob")),
+                                            data.getJSONObject(i).getString("phoneNumber"),
+                                            data.getJSONObject(i).getString("relationshipId"),
+                                            0.00,
+                                            data.getJSONObject(i).getString("gender"),
+                                            schemes));
+                                    Beneficiaries[i] = beneficiaries.get(i);
+                                    Log.d("ben Dob", data.getJSONObject(i).getString("dob"));
+                                }
+                                getFavourites(dialogFragment);
+                                return;
+                            }
+                            cancelDialog(dialogFragment);
+                        } catch (Exception e) {
+                            Log.d(ISPSS, "onResponse: "+e.toString());
+                            cancelDialog(dialogFragment);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        cancelDialog(dialogFragment);
+                        Log.d(ISPSS, "onErrorResponse: "+error);
+                    }
+                });
+        queue.add(jsonObjectRequest);
+    }
+
+    public void getFavourites(final DialogFragment dialogFragment){
+        final ArrayList<Favourite> favs = new ArrayList<>();
+        RequestQueue queue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                DOMAIN + GET_FAVOURITES + getContributorID(),
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if(response.getInt("code") == 0){
+                                JSONArray favArray = response.getJSONArray("body");
+                                for(int i = 0; i < favArray.length();i++){
+                                    JSONObject fav = favArray.getJSONObject(i);
+                                    favs.add(new Favourite(fav.getString("id"),
+                                            fav.getJSONObject("favourite").getString("memberID"),
+                                            fav.getJSONObject("favourite").getString("firstName") + " " +
+                                                    (fav.getJSONObject("favourite").getString("middleName").isEmpty() ? "" : fav.getJSONObject("favourite").getString("middleName") + " ") +
+                                                    fav.getJSONObject("favourite").getString("lastName")));
+                                }
+                                FavouritesGlobal.addAll(favs);
+                            } else {
+                            }
+                            cancelDialog(dialogFragment);
+                        } catch (Exception e){
+                            cancelDialog(dialogFragment);
+                            Log.d(ISPSS, "onResponse: "+e.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        cancelDialog(dialogFragment);
+                        Log.d(ISPSS, "onErrorResponse: "+error.toString());
+                    }
+                }
+        );
         queue.add(jsonObjectRequest);
     }
 
@@ -559,5 +706,22 @@ public class ISPSSManager {
         return name;
     }
 
+    public boolean beneficiariesHas(String id){
+        for (Beneficiary beneficiary : Beneficiaries) {
+            if (beneficiary.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean beneficiariesHas(ArrayList<Beneficiary> beneficiaries, String id){
+        for (Beneficiary beneficiary : beneficiaries) {
+            if (beneficiary.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

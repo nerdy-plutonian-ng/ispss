@@ -68,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:src="@drawable/fav_list"
+                            android:src="@drawable/star_grey"
                             android:id="@+id/favoriteBook_IV"
                             app:layout_constraintTop_toTopOf="@+id/memberID_TIL"
                             app:layout_constraintBottom_toBottomOf="@id/memberID_TIL" />
@@ -92,16 +92,7 @@
                                 android:inputType="text" />
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <ImageView
-                            android:onClick="makeFavourite"
-                            android:tooltipText="Click to add to favourites"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:src="@drawable/star_grey"
-                            android:id="@+id/favorite_IV"
-                            app:layout_constraintTop_toTopOf="@+id/memberName_TIL"
-                            app:layout_constraintBottom_toBottomOf="@id/memberName_TIL" />
+
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="0dp"
